@@ -1,17 +1,16 @@
 package com.example.erfan_delavari_hw11_maktab36.controller.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 
-import android.os.Bundle;
+import androidx.fragment.app.Fragment;
 
-import com.example.erfan_delavari_hw11_maktab36.R;
+import com.example.erfan_delavari_hw11_maktab36.controller.Fragments.EnterFragment;
 
-public class EnterActivity extends AppCompatActivity {
+public class EnterActivity extends SingleFragmentActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter);
-
+    public Fragment fragmentCreator() {
+        return EnterFragment.newInstance();
     }
 }

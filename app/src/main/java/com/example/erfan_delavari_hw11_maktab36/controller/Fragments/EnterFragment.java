@@ -12,7 +12,7 @@ import com.example.erfan_delavari_hw11_maktab36.R;
 
 public class EnterFragment extends Fragment {
 
-    public static EnterFragment newInstance(String param1, String param2) {
+    public static EnterFragment newInstance() {
         EnterFragment fragment = new EnterFragment();
         return fragment;
     }
@@ -20,7 +20,6 @@ public class EnterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
