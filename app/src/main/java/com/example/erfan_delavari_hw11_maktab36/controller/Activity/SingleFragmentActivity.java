@@ -11,9 +11,7 @@ import com.example.erfan_delavari_hw11_maktab36.R;
 import com.example.erfan_delavari_hw11_maktab36.controller.Fragments.EnterFragment;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
-
     public abstract Fragment fragmentCreator();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.Fragments.EnterFragment"/>
+    tools:context=".controller.Fragments.EnterFragment" >
+
+    <EditText
+        android:id="@+id/entry_edit_text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/entry_name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/entry_edit_text_number_of_tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entry_edit_text_name"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="@string/entry_number_of_tasks"
+        android:inputType="number" />
+
+    <ImageButton
+        android:id="@+id/entry_button_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entry_edit_text_number_of_tasks"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_action_name" />
+
+</RelativeLayout>
