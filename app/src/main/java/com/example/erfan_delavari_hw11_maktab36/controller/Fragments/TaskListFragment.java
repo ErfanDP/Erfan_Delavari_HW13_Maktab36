@@ -23,7 +23,7 @@ public class TaskListFragment extends Fragment {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_NAME, name);
-        args.putInt(ARG_PARAM2, numberOfTasks );
+        args.putInt(ARG_PARAM2, numberOfTasks);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,6 +41,7 @@ public class TaskListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list, container, false);
+        View view =  inflater.inflate(R.layout.fragment_task_list, container, false);
+        return view;
     }
 }
