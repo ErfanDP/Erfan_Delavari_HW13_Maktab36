@@ -9,6 +9,7 @@ import java.util.UUID;
 public class TaskRepository implements RepositoryInterface<Task>{
     private static TaskRepository sRepository;
     private List<Task> mTaskList = new ArrayList<>();
+    private int mNumberOfCrimes = -1;
 
     public TaskRepository() {
 
@@ -51,6 +52,12 @@ public class TaskRepository implements RepositoryInterface<Task>{
         }
     }
 
+    @Override
+    public void update(Task task) {
+        Task updateTask = get(task.getUUID());
+        updateTask.setName(task.getName());
+        updateTask.setTaskState(task.getTaskState());
+    }
     @Override
     public void insert(Task task) {
         mTaskList.add(task);
