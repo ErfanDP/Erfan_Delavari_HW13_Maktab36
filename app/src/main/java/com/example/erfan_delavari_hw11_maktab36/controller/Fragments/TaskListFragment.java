@@ -19,11 +19,17 @@ import com.example.erfan_delavari_hw11_maktab36.model.Task;
 import com.example.erfan_delavari_hw11_maktab36.repository.RepositoryInterface;
 import com.example.erfan_delavari_hw11_maktab36.repository.TaskRepository;
 
+import java.util.List;
+
 
 public class TaskListFragment extends Fragment {
 
     private static final String ARG_NAME = "com.example.erfan_delavari_hw11_maktab36.arg_name";
     private static final String ARG_PARAM2 = "com.example.erfan_delavari_hw11_maktab36.arg_number_of_tasks";
+
+    private static final int TYPE_ODD = 1;
+    private static final int TYPE_EVEN = 2;
+
 
     private RepositoryInterface<Task> mRepository;
     private RecyclerView mRecyclerView;
@@ -58,8 +64,7 @@ public class TaskListFragment extends Fragment {
             rowNumbers = 2;
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),rowNumbers));
-
-
+        mRecyclerView.setAdapter(new TaskAdapter(mRepository.getList()));
         return view;
     }
 
@@ -72,14 +77,14 @@ public class TaskListFragment extends Fragment {
         mRepository = TaskRepository.getRepository();
     }
 
-    private class TaskHolderOdd extends RecyclerView.ViewHolder{
+    private class TaskHolder extends RecyclerView.ViewHolder{
 
         private Task mTask;
         private TextView mName;
         private RadioGroup mTaskState;
 
 
-        public TaskHolderOdd(@NonNull View itemView) {
+        public TaskHolder(@NonNull View itemView) {
             super(itemView);
             mName  = itemView.findViewById(R.id.list_row_name);
             mTaskState = itemView.findViewById(R.id.list_row_task_state);
@@ -98,6 +103,45 @@ public class TaskListFragment extends Fragment {
                 case DOING:
                     mTaskState.check(R.id.radioButton_doing);
             }
+        }
+    }
+
+    private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
+        private List<Task> mTaskList;
+
+        public TaskAdapter(List<Task> taskList) {
+            mTaskList = taskList;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position % 2 == 0) {
+                return TYPE_ODD;
+            } else
+                return TYPE_EVEN;
+        }
+
+        @NonNull
+        @Override
+        public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View view;
+            if (viewType == TYPE_ODD) {
+                view = inflater.inflate(R.layout.list_row_odd_task, parent, false);
+            } else {
+                view = inflater.inflate(R.layout.list_row_even_task, parent, false);
+            }
+            return new TaskHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
+            holder.viewBinder(mTaskList.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mTaskList.size();
         }
     }
 }

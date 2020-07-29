@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.erfan_delavari_hw11_maktab36.R;
 import com.example.erfan_delavari_hw11_maktab36.controller.Activity.TaskListActivity;
@@ -17,7 +18,7 @@ import com.example.erfan_delavari_hw11_maktab36.controller.Activity.TaskListActi
 public class EnterFragment extends Fragment {
     private EditText mEditTextName;
     private EditText mEditTextNumberOfTasks;
-    private Button mButtonDone;
+    private ImageButton mButtonDone;
 
     public static EnterFragment newInstance() {
         return new EnterFragment();
