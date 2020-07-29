@@ -1,6 +1,7 @@
 package com.example.erfan_delavari_hw11_maktab36.repository;
 
 import com.example.erfan_delavari_hw11_maktab36.model.Task;
+import com.example.erfan_delavari_hw11_maktab36.model.TaskState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +9,37 @@ import java.util.UUID;
 
 public class TaskRepository implements RepositoryInterface<Task>{
     private static TaskRepository sRepository;
+    private static boolean sInitialised = false;
     private List<Task> mTaskList = new ArrayList<>();
-    private int mNumberOfCrimes = -1;
-
-    public TaskRepository() {
-
+    private TaskRepository(int numberOfTasks,String name ) {
+        for (int i = 0; i < numberOfTasks; i++) {
+            TaskState taskState = TaskState.DOING;
+            switch (((int)(Math.random()*10)) % 3){
+                case 1:
+                    taskState = TaskState.DONE;
+                    break;
+                case 2:
+                    taskState = TaskState.TODO;
+            }
+            mTaskList.add(new Task(name+i,taskState));
+        }
     }
 
+    public static void initialiseTaskList(int numberOfTasks , String name){
+        sRepository  = new TaskRepository(numberOfTasks,name);
+        sInitialised = true;
+    }
+
+    /**
+     * for making this method to work you should first initialise TaskList
+     * with initialiseTaskList() method
+     * @return if sInitialised == true return Repository singleTone
+     */
     public static TaskRepository getRepository() {
-        if(sRepository == null){
-            sRepository = new TaskRepository();
+        if(sInitialised){
+            return sRepository;
         }
-        return sRepository;
+        return null;
     }
 
     @Override
@@ -58,6 +78,7 @@ public class TaskRepository implements RepositoryInterface<Task>{
         updateTask.setName(task.getName());
         updateTask.setTaskState(task.getTaskState());
     }
+
     @Override
     public void insert(Task task) {
         mTaskList.add(task);
