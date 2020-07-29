@@ -21,7 +21,7 @@ public class TaskRepository implements RepositoryInterface<Task>{
                 case 2:
                     taskState = TaskState.TODO;
             }
-            mTaskList.add(new Task(name+i,taskState));
+            mTaskList.add(new Task(name+"#"+(i+1) , taskState));
         }
     }
 

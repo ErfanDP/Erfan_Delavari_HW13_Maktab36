@@ -79,7 +79,6 @@ public class TaskListFragment extends Fragment {
 
     private class TaskHolder extends RecyclerView.ViewHolder{
 
-        private Task mTask;
         private TextView mName;
         private RadioGroup mTaskState;
 
@@ -91,9 +90,8 @@ public class TaskListFragment extends Fragment {
         }
 
         public void viewBinder(Task task){
-            mTask = task;
-            mName.setText(mTask.getName());
-            switch (mTask.getTaskState()){
+            mName.setText(task.getName());
+            switch (task.getTaskState()){
                 case DONE:
                     mTaskState.check(R.id.radioButton_done);
                     break;
