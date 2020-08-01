@@ -1,4 +1,4 @@
-package com.example.erfan_delavari_hw11_maktab36.controller.Activity;
+package com.example.erfan_delavari_hw12_maktab36.controller.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-import com.example.erfan_delavari_hw11_maktab36.R;
+import com.example.erfan_delavari_hw12_maktab36.R;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
     public abstract Fragment fragmentCreator();

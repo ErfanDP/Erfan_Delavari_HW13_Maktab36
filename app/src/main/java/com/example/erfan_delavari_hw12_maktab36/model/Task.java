@@ -1,4 +1,4 @@
-package com.example.erfan_delavari_hw11_maktab36.model;
+package com.example.erfan_delavari_hw12_maktab36.model;
 
 import java.util.UUID;
 

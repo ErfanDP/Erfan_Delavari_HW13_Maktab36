@@ -1,19 +1,17 @@
-package com.example.erfan_delavari_hw11_maktab36.controller.Fragments;
+package com.example.erfan_delavari_hw12_maktab36.controller.Fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.example.erfan_delavari_hw11_maktab36.R;
-import com.example.erfan_delavari_hw11_maktab36.controller.Activity.TaskListActivity;
+import com.example.erfan_delavari_hw12_maktab36.R;
+import com.example.erfan_delavari_hw12_maktab36.controller.Activity.TaskListActivity;
 
 public class EnterFragment extends Fragment {
     private EditText mEditTextName;
