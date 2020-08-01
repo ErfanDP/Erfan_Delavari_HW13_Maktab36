@@ -26,8 +26,6 @@ import java.util.List;
 
 public class TaskListFragment extends Fragment {
 
-    private static final String ARG_NAME = "com.example.erfan_delavari_hw12_maktab36.arg_name_list";
-    private static final String ARG_NUMBER_OF_TASKS = "com.example.erfan_delavari_hw12_maktab36.arg_number_of_tasks_list";
     private static final String ARG_TASK_STATE = "com.example.erfan_delavari_hw12_maktab36.arg_task_state_list";
 
 
@@ -38,8 +36,6 @@ public class TaskListFragment extends Fragment {
     public static TaskListFragment newInstance(String name, int numberOfTasks, TaskState taskState) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_NAME, name);
-        args.putInt(ARG_NUMBER_OF_TASKS, numberOfTasks);
         args.putSerializable(ARG_TASK_STATE, taskState);
         fragment.setArguments(args);
         return fragment;
@@ -48,9 +44,9 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRepository = TaskRepository.getRepository();
         if (getArguments() != null) {
             mTaskState = (TaskState) getArguments().getSerializable(ARG_TASK_STATE);
-            repositoryInit();
         }
     }
 
@@ -79,10 +75,7 @@ public class TaskListFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.recycler_view_contaner);
     }
 
-    private void repositoryInit() {
-        TaskRepository.initialiseTaskList(getArguments().getInt(ARG_NUMBER_OF_TASKS), getArguments().getString(ARG_NAME));
-        mRepository = TaskRepository.getRepository();
-    }
+
 
 }
 

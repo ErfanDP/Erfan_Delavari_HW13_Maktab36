@@ -22,6 +22,7 @@ public class TaskRepository implements RepositoryInterface<Task>{
                     break;
                 case 2:
                     taskState = TaskState.TODO;
+                    break;
             }
             mTaskList.add(new Task(name+"#"+(i+1) , taskState));
         }
@@ -37,7 +38,7 @@ public class TaskRepository implements RepositoryInterface<Task>{
      * with initialiseTaskList() method
      * @return if sInitialised == true return Repository singleTone
      */
-    public static TaskRepository getRepository() {
+    public static RepositoryInterface<Task> getRepository() {
         if(sInitialised){
             return sRepository;
         }
@@ -92,7 +93,7 @@ public class TaskRepository implements RepositoryInterface<Task>{
     @Override
     public List<Task> getTaskListByTaskState(TaskState taskState){
         List<Task> taskList = new ArrayList<>();
-        for (Task task:mTaskList) {
+        for (Task task: mTaskList) {
             if(task.getTaskState() == taskState ){
                 taskList.add(task);
             }

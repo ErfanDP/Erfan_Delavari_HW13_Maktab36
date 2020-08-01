@@ -16,7 +16,10 @@ import android.view.View;
 
 import com.example.erfan_delavari_hw12_maktab36.R;
 import com.example.erfan_delavari_hw12_maktab36.controller.Fragments.TaskListFragment;
+import com.example.erfan_delavari_hw12_maktab36.model.Task;
 import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
+import com.example.erfan_delavari_hw12_maktab36.repository.RepositoryInterface;
+import com.example.erfan_delavari_hw12_maktab36.repository.TaskRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -24,6 +27,7 @@ public class TaskPagerActivity extends AppCompatActivity {
     private static final String EXTRA_NAME = "com.example.erfan_delavari_hw11_maktab36.extra_name";
     private static final String EXTRA_NUMBER_OF_TASKS = "com.example.erfan_delavari_hw11_maktab36.extra_number_tasks";
 
+    private RepositoryInterface<Task> mRepository;
     private ViewPager2 mViewPager;
     private String mName;
     private int mNumberOfTasks;
@@ -41,6 +45,7 @@ public class TaskPagerActivity extends AppCompatActivity {
         extrasInit();
         setContentView(R.layout.activity_task_pager);
         findViews();
+        repositoryInit();
         mViewPager.setAdapter(new TaskPagerAdapter(this));
         tabLayoutAndViewPagerBinder();
     }
@@ -71,6 +76,13 @@ public class TaskPagerActivity extends AppCompatActivity {
         }
         return "null";
     }
+
+    private void repositoryInit() {
+        TaskRepository.initialiseTaskList(mNumberOfTasks, mName);
+        mRepository = TaskRepository.getRepository();
+    }
+
+
     private class TaskPagerAdapter extends FragmentStateAdapter{
 
         public TaskPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
