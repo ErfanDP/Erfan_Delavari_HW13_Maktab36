@@ -1,14 +1,11 @@
-package com.example.erfan_delavari_hw11_maktab36.controller.Activity;
+package com.example.erfan_delavari_hw12_maktab36.controller.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
-import com.example.erfan_delavari_hw11_maktab36.R;
-import com.example.erfan_delavari_hw11_maktab36.controller.Fragments.TaskListFragment;
+import com.example.erfan_delavari_hw12_maktab36.controller.Fragments.TaskListFragment;
 
 public class TaskListActivity extends SingleFragmentActivity {
     private static final String EXTRA_NAME = "com.example.erfan_delavari_hw11_maktab36.extra_name";
