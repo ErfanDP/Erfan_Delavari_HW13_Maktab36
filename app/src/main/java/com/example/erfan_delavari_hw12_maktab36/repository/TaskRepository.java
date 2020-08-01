@@ -89,11 +89,11 @@ public class TaskRepository implements RepositoryInterface<Task>{
     @Override
     public void insertToList(List<Task> list) {mTaskList.addAll(list);}
 
-
+    @Override
     public List<Task> getTaskListByTaskState(TaskState taskState){
         List<Task> taskList = new ArrayList<>();
         for (Task task:mTaskList) {
-            if(task.getTaskState().equals(taskState)){
+            if(task.getTaskState() == taskState ){
                 taskList.add(task);
             }
         }

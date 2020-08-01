@@ -20,5 +20,5 @@ public interface RepositoryInterface<E> {
 
     void update(E e);
 
-
+    List<E> getTaskListByTaskState(TaskState taskState);
 }
