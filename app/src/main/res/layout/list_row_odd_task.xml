@@ -12,32 +12,4 @@
         android:textSize="22sp"
         tools:text="TestTestTestTest" />
 
-    <RadioGroup
-        android:id="@+id/list_row_task_state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/list_row_name"
-        android:orientation="horizontal">
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButton_to_do"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/to_do"
-            android:textSize="18sp" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButton_doing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/doing"
-            android:textSize="18sp" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/radioButton_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/done"
-            android:textSize="18sp" />
-    </RadioGroup>
 </RelativeLayout>

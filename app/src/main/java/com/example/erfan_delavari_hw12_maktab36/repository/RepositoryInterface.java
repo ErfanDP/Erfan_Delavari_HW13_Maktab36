@@ -1,5 +1,7 @@
 package com.example.erfan_delavari_hw12_maktab36.repository;
 
+import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -17,4 +19,6 @@ public interface RepositoryInterface<E> {
     void insertToList(List<E> list);
 
     void update(E e);
+
+
 }

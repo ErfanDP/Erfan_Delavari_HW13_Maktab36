@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.erfan_delavari_hw12_maktab36.R;
 import com.example.erfan_delavari_hw12_maktab36.model.Task;
+import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
 import com.example.erfan_delavari_hw12_maktab36.repository.RepositoryInterface;
 import com.example.erfan_delavari_hw12_maktab36.repository.TaskRepository;
 
@@ -25,7 +26,8 @@ import java.util.List;
 public class TaskListFragment extends Fragment {
 
     private static final String ARG_NAME = "com.example.erfan_delavari_hw11_maktab36.arg_name";
-    private static final String ARG_PARAM2 = "com.example.erfan_delavari_hw11_maktab36.arg_number_of_tasks";
+    private static final String ARG_NUMBER_OF_TASKS = "com.example.erfan_delavari_hw11_maktab36.arg_number_of_tasks";
+    private static final String ARG_TASK_STATE = "com.example.erfan_delavari_hw11_maktab36.arg_number_of_tasks";
 
     private static final int TYPE_ODD = 1;
     private static final int TYPE_EVEN = 2;
@@ -35,11 +37,12 @@ public class TaskListFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
 
-    public static TaskListFragment newInstance(String name, int numberOfTasks) {
+    public static TaskListFragment newInstance(String name, int numberOfTasks, TaskState taskState) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_NAME, name);
-        args.putInt(ARG_PARAM2, numberOfTasks);
+        args.putInt(ARG_NUMBER_OF_TASKS, numberOfTasks);
+        args.putSerializable(ARG_TASK_STATE,taskState);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,6 +67,7 @@ public class TaskListFragment extends Fragment {
             rowNumbers = 2;
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),rowNumbers));
+
         mRecyclerView.setAdapter(new TaskAdapter(mRepository.getList()));
         return view;
     }
@@ -73,34 +77,22 @@ public class TaskListFragment extends Fragment {
     }
 
     private void repositoryInit() {
-        TaskRepository.initialiseTaskList(getArguments().getInt(ARG_PARAM2), getArguments().getString(ARG_NAME));
+        TaskRepository.initialiseTaskList(getArguments().getInt(ARG_NUMBER_OF_TASKS), getArguments().getString(ARG_NAME));
         mRepository = TaskRepository.getRepository();
     }
 
     private class TaskHolder extends RecyclerView.ViewHolder{
 
         private TextView mName;
-        private RadioGroup mTaskState;
 
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             mName  = itemView.findViewById(R.id.list_row_name);
-            mTaskState = itemView.findViewById(R.id.list_row_task_state);
         }
 
         public void viewBinder(Task task){
             mName.setText(task.getName());
-            switch (task.getTaskState()){
-                case DONE:
-                    mTaskState.check(R.id.radioButton_done);
-                    break;
-                case TODO:
-                    mTaskState.check(R.id.radioButton_to_do);
-                    break;
-                case DOING:
-                    mTaskState.check(R.id.radioButton_doing);
-            }
         }
     }
 

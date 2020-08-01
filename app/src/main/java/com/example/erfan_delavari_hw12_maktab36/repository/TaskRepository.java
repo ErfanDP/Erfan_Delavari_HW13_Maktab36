@@ -11,6 +11,8 @@ public class TaskRepository implements RepositoryInterface<Task>{
     private static TaskRepository sRepository;
     private static boolean sInitialised = false;
     private List<Task> mTaskList = new ArrayList<>();
+
+
     private TaskRepository(int numberOfTasks,String name ) {
         for (int i = 0; i < numberOfTasks; i++) {
             TaskState taskState = TaskState.DOING;
@@ -86,4 +88,15 @@ public class TaskRepository implements RepositoryInterface<Task>{
 
     @Override
     public void insertToList(List<Task> list) {mTaskList.addAll(list);}
+
+
+    public List<Task> getTaskListByTaskState(TaskState taskState){
+        List<Task> taskList = new ArrayList<>();
+        for (Task task:mTaskList) {
+            if(task.getTaskState().equals(taskState)){
+                taskList.add(task);
+            }
+        }
+        return taskList;
+    }
 }

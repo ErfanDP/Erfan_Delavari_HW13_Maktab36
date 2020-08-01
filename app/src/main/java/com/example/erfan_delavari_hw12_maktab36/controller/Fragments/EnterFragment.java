@@ -8,15 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.example.erfan_delavari_hw12_maktab36.R;
-import com.example.erfan_delavari_hw12_maktab36.controller.Activity.TaskListActivity;
+import com.example.erfan_delavari_hw12_maktab36.controller.Activity.TaskPagerActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EnterFragment extends Fragment {
     private EditText mEditTextName;
     private EditText mEditTextNumberOfTasks;
-    private ImageButton mButtonDone;
+    private FloatingActionButton mButtonDone;
 
     public static EnterFragment newInstance() {
         return new EnterFragment();
@@ -35,7 +35,7 @@ public class EnterFragment extends Fragment {
         mButtonDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(TaskListActivity.newIntent(getActivity(),
+                startActivity(TaskPagerActivity.newIntent(getActivity(),
                         mEditTextName.getText().toString(),
                         Integer.parseInt(mEditTextNumberOfTasks.getText().toString())));
             }
