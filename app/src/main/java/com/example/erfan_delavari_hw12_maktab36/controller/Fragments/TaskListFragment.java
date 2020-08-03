@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class TaskListFragment extends Fragment {
     private RepositoryInterface<Task> mRepository;
     private RecyclerView mRecyclerView;
     private TaskState mTaskState;
+    private ImageView mImageViewNoDataFound;
 
     public static TaskListFragment newInstance(String name, int numberOfTasks, TaskState taskState) {
         TaskListFragment fragment = new TaskListFragment();
@@ -68,11 +70,18 @@ public class TaskListFragment extends Fragment {
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), rowNumbers));
         mRepository.getList();
-        mRecyclerView.setAdapter(new TaskListAdapter(mRepository.getTaskListByTaskState(mTaskState)));
+        mRecyclerView.setAdapter(new TaskListAdapter(mRepository.getTaskListByTaskState(mTaskState)
+                ,new TaskListAdapter.OnListEmpty(){
+                    @Override
+                    public void onListIsEmpty() {
+                        mImageViewNoDataFound.setVisibility(View.VISIBLE);
+                    }
+                }));
     }
 
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_view_contaner);
+        mImageViewNoDataFound = view.findViewById(R.id.imageView_no_data_found);
     }
 
 

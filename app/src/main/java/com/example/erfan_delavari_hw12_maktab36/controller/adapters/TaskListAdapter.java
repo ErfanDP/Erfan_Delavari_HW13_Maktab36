@@ -19,9 +19,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     private static final int TYPE_EVEN = 2;
 
     private List<Task> mTaskList;
-
-    public TaskListAdapter(List<Task> taskList) {
+    private OnListEmpty mOnListEmpty;
+    public TaskListAdapter(List<Task> taskList,OnListEmpty onListEmpty) {
         mTaskList = taskList;
+        mOnListEmpty = onListEmpty;
     }
 
     @Override
@@ -48,6 +49,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     @Override
     public void onBindViewHolder(@NonNull TaskListAdapter.TaskHolder holder, int position) {
         holder.viewBinder(mTaskList.get(position));
+        if(mTaskList.size() == 0){
+            mOnListEmpty.onListIsEmpty();
+        }
     }
 
     @Override
@@ -59,7 +63,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
         private TextView mName;
 
-
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             mName  = itemView.findViewById(R.id.list_row_name);
@@ -68,6 +71,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         public void viewBinder(Task task){
             mName.setText(task.getName());
         }
+    }
+
+    public interface OnListEmpty{
+        void onListIsEmpty();
     }
 
 }

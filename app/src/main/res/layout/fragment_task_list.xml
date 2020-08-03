@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recycler_view_contaner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.Fragments.TaskListFragment"/>
+    tools:context=".controller.Fragments.TaskListFragment" >
+
+    <ImageView
+        android:id="@+id/imageView_no_data_found"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_no_data_found"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/recycler_view_contaner"
+        app:layout_constraintEnd_toEndOf="@id/recycler_view_contaner"
+        app:layout_constraintStart_toStartOf="@id/recycler_view_contaner"
+        app:layout_constraintTop_toTopOf="@id/recycler_view_contaner" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_contaner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
