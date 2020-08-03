@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,8 +35,10 @@ public class TaskListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TaskState mTaskState;
     private ImageView mImageViewNoDataFound;
+    private TaskListAdapter mAdapter;
+    private List<Task> mTaskList;
 
-    public static TaskListFragment newInstance(String name, int numberOfTasks, TaskState taskState) {
+    public static TaskListFragment newInstance(TaskState taskState) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_TASK_STATE, taskState);
@@ -70,13 +73,15 @@ public class TaskListFragment extends Fragment {
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), rowNumbers));
         mRepository.getList();
-        mRecyclerView.setAdapter(new TaskListAdapter(mRepository.getTaskListByTaskState(mTaskState)
-                ,new TaskListAdapter.OnListEmpty(){
-                    @Override
-                    public void onListIsEmpty() {
-                        mImageViewNoDataFound.setVisibility(View.VISIBLE);
-                    }
-                }));
+        mTaskList =mRepository.getTaskListByTaskState(mTaskState);
+        mAdapter = new TaskListAdapter(mTaskList
+                , new TaskListAdapter.OnListEmpty() {
+            @Override
+            public void onListIsEmpty() {
+                mImageViewNoDataFound.setVisibility(View.VISIBLE);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void findViews(View view) {
@@ -84,7 +89,12 @@ public class TaskListFragment extends Fragment {
         mImageViewNoDataFound = view.findViewById(R.id.imageView_no_data_found);
     }
 
-
+    public void addTask(Task task) {
+        mRepository.insert(task);
+        mTaskList.add(task);
+        mAdapter.notifyDataSetChanged();
+        mImageViewNoDataFound.setVisibility(View.INVISIBLE);
+    }
 
 }
 

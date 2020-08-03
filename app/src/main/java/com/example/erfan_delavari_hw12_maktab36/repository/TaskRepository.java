@@ -15,16 +15,7 @@ public class TaskRepository implements RepositoryInterface<Task>{
 
     private TaskRepository(int numberOfTasks,String name ) {
         for (int i = 0; i < numberOfTasks; i++) {
-            TaskState taskState = TaskState.DOING;
-            switch (((int)(Math.random()*10)) % 3){
-                case 1:
-                    taskState = TaskState.DONE;
-                    break;
-                case 2:
-                    taskState = TaskState.TODO;
-                    break;
-            }
-            mTaskList.add(new Task(name+"#"+(i+1) , taskState));
+            mTaskList.add(Task.randomTaskCreator(name+"#"+(i+1)));
         }
     }
 

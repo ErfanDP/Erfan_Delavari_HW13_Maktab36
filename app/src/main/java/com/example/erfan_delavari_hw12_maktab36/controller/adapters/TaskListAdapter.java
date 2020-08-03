@@ -23,6 +23,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     public TaskListAdapter(List<Task> taskList,OnListEmpty onListEmpty) {
         mTaskList = taskList;
         mOnListEmpty = onListEmpty;
+        if(mTaskList.size() == 0){
+            mOnListEmpty.onListIsEmpty();
+        }
     }
 
     @Override
@@ -49,9 +52,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     @Override
     public void onBindViewHolder(@NonNull TaskListAdapter.TaskHolder holder, int position) {
         holder.viewBinder(mTaskList.get(position));
-        if(mTaskList.size() == 0){
-            mOnListEmpty.onListIsEmpty();
-        }
+
     }
 
     @Override

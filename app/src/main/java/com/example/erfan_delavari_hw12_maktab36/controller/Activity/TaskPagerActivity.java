@@ -20,6 +20,7 @@ import com.example.erfan_delavari_hw12_maktab36.model.Task;
 import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
 import com.example.erfan_delavari_hw12_maktab36.repository.RepositoryInterface;
 import com.example.erfan_delavari_hw12_maktab36.repository.TaskRepository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -31,6 +32,10 @@ public class TaskPagerActivity extends AppCompatActivity {
     private ViewPager2 mViewPager;
     private String mName;
     private int mNumberOfTasks;
+    private FloatingActionButton mButtonAdd;
+    private TaskListFragment mToDoFragment;
+    private TaskListFragment mDoingFragment;
+    private TaskListFragment mDoneFragment;
 
     public static Intent newIntent(Context context, String name, int numberOfTasks) {
        Intent intent = new Intent(context, TaskPagerActivity.class);
@@ -44,10 +49,40 @@ public class TaskPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         extrasInit();
         setContentView(R.layout.activity_task_pager);
+        fragmentsInit();
         findViews();
         repositoryInit();
         mViewPager.setAdapter(new TaskPagerAdapter(this));
         tabLayoutAndViewPagerBinder();
+        mButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNumberOfTasks++;
+                Task task = Task.randomTaskCreator(mName+"#"+mNumberOfTasks);
+                switch (task.getTaskState()){
+                    case DOING:
+                        mDoingFragment.addTask(task);
+                        break;
+                    case TODO:
+                        mToDoFragment.addTask(task);
+                        break;
+                    case DONE:
+                        mDoneFragment.addTask(task);
+                }
+
+            }
+        });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    private void fragmentsInit() {
+        mDoingFragment = TaskListFragment.newInstance(TaskState.DOING);
+        mDoneFragment = TaskListFragment.newInstance(TaskState.DONE);
+        mToDoFragment = TaskListFragment.newInstance(TaskState.TODO);
     }
 
     private void extrasInit() {
@@ -56,6 +91,7 @@ public class TaskPagerActivity extends AppCompatActivity {
     }
 
     private void findViews() {
+        mButtonAdd = findViewById(R.id.add_button);
         mViewPager= findViewById(R.id.viewPager2_tasks);
     }
 
@@ -94,11 +130,11 @@ public class TaskPagerActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position){
                 case 0:
-                    return TaskListFragment.newInstance(mName,mNumberOfTasks,TaskState.TODO);
+                    return mToDoFragment;
                 case 1:
-                    return TaskListFragment.newInstance(mName,mNumberOfTasks,TaskState.DOING);
+                    return mDoingFragment;
                 case 2:
-                    return TaskListFragment.newInstance(mName,mNumberOfTasks,TaskState.DONE);
+                    return mDoneFragment;
             }
             return null;
         }
