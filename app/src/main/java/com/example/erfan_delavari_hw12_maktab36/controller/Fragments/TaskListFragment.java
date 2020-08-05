@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,11 @@ import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
 import com.example.erfan_delavari_hw12_maktab36.repository.RepositoryInterface;
 import com.example.erfan_delavari_hw12_maktab36.repository.TaskRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class TaskListFragment extends Fragment {
+public class TaskListFragment extends Fragment implements Serializable {
 
     private static final String ARG_TASK_STATE = "com.example.erfan_delavari_hw12_maktab36.arg_task_state_list";
 
@@ -38,6 +40,9 @@ public class TaskListFragment extends Fragment {
     private TaskListAdapter mAdapter;
     private List<Task> mTaskList;
 
+    public TaskListFragment() {
+    }
+
     public static TaskListFragment newInstance(TaskState taskState) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
@@ -46,9 +51,11 @@ public class TaskListFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("App",mTaskState+"Fragment onCreate");
         mRepository = TaskRepository.getRepository();
         if (getArguments() != null) {
             mTaskState = (TaskState) getArguments().getSerializable(ARG_TASK_STATE);
@@ -58,8 +65,10 @@ public class TaskListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("App",mTaskState+"Fragment onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+
         findViews(view);
         recyclerViewInit();
         return view;
@@ -72,7 +81,6 @@ public class TaskListFragment extends Fragment {
             rowNumbers = 2;
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), rowNumbers));
-        mRepository.getList();
         mTaskList =mRepository.getTaskListByTaskState(mTaskState);
         mAdapter = new TaskListAdapter(mTaskList
                 , new TaskListAdapter.OnListEmpty() {
@@ -81,6 +89,8 @@ public class TaskListFragment extends Fragment {
                 mImageViewNoDataFound.setVisibility(View.VISIBLE);
             }
         });
+        Log.d("App",mTaskState+"Fragment mTaskList:"+mTaskList.toString());
+
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -92,7 +102,7 @@ public class TaskListFragment extends Fragment {
     public void addTask(Task task) {
         mRepository.insert(task);
         mTaskList.add(task);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemInserted(mTaskList.size()-1);
         mImageViewNoDataFound.setVisibility(View.INVISIBLE);
     }
 
