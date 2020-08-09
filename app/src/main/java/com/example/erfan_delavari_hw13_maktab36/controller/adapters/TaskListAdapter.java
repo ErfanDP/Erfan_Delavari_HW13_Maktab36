@@ -1,4 +1,4 @@
-package com.example.erfan_delavari_hw12_maktab36.controller.adapters;
+package com.example.erfan_delavari_hw13_maktab36.controller.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.erfan_delavari_hw12_maktab36.R;
-import com.example.erfan_delavari_hw12_maktab36.model.Task;
+import com.example.erfan_delavari_hw13_maktab36.R;
+import com.example.erfan_delavari_hw13_maktab36.model.Task;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     private List<Task> mTaskList;
     private OnListEmpty mOnListEmpty;
+
     public TaskListAdapter(List<Task> taskList,OnListEmpty onListEmpty) {
         mTaskList = taskList;
         mOnListEmpty = onListEmpty;

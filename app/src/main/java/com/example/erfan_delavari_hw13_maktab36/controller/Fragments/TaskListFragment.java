@@ -1,9 +1,8 @@
-package com.example.erfan_delavari_hw12_maktab36.controller.Fragments;
+package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,28 +11,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import com.example.erfan_delavari_hw12_maktab36.R;
-import com.example.erfan_delavari_hw12_maktab36.controller.adapters.TaskListAdapter;
-import com.example.erfan_delavari_hw12_maktab36.model.Task;
-import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
-import com.example.erfan_delavari_hw12_maktab36.repository.RepositoryInterface;
-import com.example.erfan_delavari_hw12_maktab36.repository.TaskRepository;
+import com.example.erfan_delavari_hw13_maktab36.R;
+import com.example.erfan_delavari_hw13_maktab36.controller.adapters.TaskListAdapter;
+import com.example.erfan_delavari_hw13_maktab36.model.Task;
+import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
+import com.example.erfan_delavari_hw13_maktab36.model.User;
+import com.example.erfan_delavari_hw13_maktab36.repository.RepositoryInterface;
+import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 
 public class TaskListFragment extends Fragment implements Serializable {
 
-    private static final String ARG_TASK_STATE = "com.example.erfan_delavari_hw12_maktab36.arg_task_state_list";
+    private static final String ARG_TASK_STATE = "arg_task_state_list";
+    public static final String ARG_USER_ID = "arg_user_ID";
 
-
-    private RepositoryInterface<Task> mRepository;
+    private User mUser;
     private RecyclerView mRecyclerView;
     private TaskState mTaskState;
     private ImageView mImageViewNoDataFound;
@@ -43,10 +41,11 @@ public class TaskListFragment extends Fragment implements Serializable {
     public TaskListFragment() {
     }
 
-    public static TaskListFragment newInstance(TaskState taskState) {
+    public static TaskListFragment newInstance(TaskState taskState, UUID userID) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_TASK_STATE, taskState);
+        args.putSerializable(ARG_USER_ID, userID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,9 +55,10 @@ public class TaskListFragment extends Fragment implements Serializable {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("App",mTaskState+"Fragment onCreate");
-        mRepository = TaskRepository.getRepository();
         if (getArguments() != null) {
             mTaskState = (TaskState) getArguments().getSerializable(ARG_TASK_STATE);
+            mUser = UserRepository.getRepository()
+                    .get((UUID) getArguments().getSerializable(ARG_USER_ID));
         }
     }
 
@@ -81,7 +81,7 @@ public class TaskListFragment extends Fragment implements Serializable {
             rowNumbers = 2;
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), rowNumbers));
-        mTaskList =mRepository.getTaskListByTaskState(mTaskState);
+        mTaskList =mUser.getTaskListByTaskState(mTaskState);
         mAdapter = new TaskListAdapter(mTaskList
                 , new TaskListAdapter.OnListEmpty() {
             @Override
@@ -90,7 +90,6 @@ public class TaskListFragment extends Fragment implements Serializable {
             }
         });
         Log.d("App",mTaskState+"Fragment mTaskList:"+mTaskList.toString());
-
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -100,7 +99,7 @@ public class TaskListFragment extends Fragment implements Serializable {
     }
 
     public void addTask(Task task) {
-        mRepository.insert(task);
+        mUser.insert(task);
         mTaskList.add(task);
         mAdapter.notifyItemInserted(mTaskList.size()-1);
         mImageViewNoDataFound.setVisibility(View.INVISIBLE);

@@ -1,4 +1,8 @@
-package com.example.erfan_delavari_hw12_maktab36.controller.Activity;
+package com.example.erfan_delavari_hw13_maktab36.controller.Activity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,81 +12,49 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
-import com.example.erfan_delavari_hw12_maktab36.R;
-import com.example.erfan_delavari_hw12_maktab36.controller.Fragments.TaskListFragment;
-import com.example.erfan_delavari_hw12_maktab36.model.Task;
-import com.example.erfan_delavari_hw12_maktab36.model.TaskState;
-import com.example.erfan_delavari_hw12_maktab36.repository.RepositoryInterface;
-import com.example.erfan_delavari_hw12_maktab36.repository.TaskRepository;
+import com.example.erfan_delavari_hw13_maktab36.R;
+import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.TaskListFragment;
+import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
+import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.UUID;
+
 public class TaskPagerActivity extends AppCompatActivity {
-    private static final String EXTRA_NAME = "com.example.erfan_delavari_hw11_maktab36.extra_name";
-    private static final String EXTRA_NUMBER_OF_TASKS = "com.example.erfan_delavari_hw11_maktab36.extra_number_tasks";
-
-    private static final String BUNDLE_NUMBER_OF_TASKS = "com.example.erfan_delavari_hw11_maktab36.bundle_number_tasks";
+    public static final String EXTRA_USER_ID = "com.example.erfan_delavari_hw13_maktab36.user_ID";
 
 
-
-    private RepositoryInterface<Task> mRepository;
     private ViewPager2 mViewPager;
-    private String mName;
-    private int mNumberOfTasks;
+    private User mUser;
     private TaskPagerAdapter mTaskPagerAdapter;
 
     private FloatingActionButton mButtonAdd;
 
 
-    public static Intent newIntent(Context context, String name, int numberOfTasks) {
+    public static Intent newIntent(Context context, UUID userID) {
         Intent intent = new Intent(context, TaskPagerActivity.class);
-        intent.putExtra(EXTRA_NAME, name);
-        intent.putExtra(EXTRA_NUMBER_OF_TASKS, numberOfTasks);
+        intent.putExtra(EXTRA_USER_ID,userID);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        extrasInit();
         setContentView(R.layout.activity_task_pager);
         findViews();
-        if(savedInstanceState == null){
-            repositoryInit();
-        }else{
-            mNumberOfTasks = (int) savedInstanceState.get(BUNDLE_NUMBER_OF_TASKS);
-        }
         mTaskPagerAdapter = new TaskPagerAdapter(this);
         mViewPager.setAdapter(mTaskPagerAdapter);
         mViewPager.setOffscreenPageLimit(3);
         tabLayoutAndViewPagerBinder();
-        mButtonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mNumberOfTasks++;
-                Task task = Task.randomTaskCreator(mName + "#" + mNumberOfTasks);
-                mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
-            }
+        mButtonAdd.setOnClickListener(v -> {
+            // TODO writing a AlertDialog to Create Task and pass it to method below
+//                mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
         });
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(BUNDLE_NUMBER_OF_TASKS,mNumberOfTasks);
 
-    }
-
-    private void extrasInit() {
-        mName = getIntent().getStringExtra(EXTRA_NAME);
-        mNumberOfTasks = getIntent().getIntExtra(EXTRA_NUMBER_OF_TASKS, 0);
-    }
 
     private void findViews() {
         mButtonAdd = findViewById(R.id.add_button);
@@ -107,10 +79,6 @@ public class TaskPagerActivity extends AppCompatActivity {
         return "null";
     }
 
-    private void repositoryInit() {
-        TaskRepository.initialiseTaskList(mNumberOfTasks, mName);
-        mRepository = TaskRepository.getRepository();
-    }
 
 
     private class TaskPagerAdapter extends FragmentStateAdapter {

@@ -1,4 +1,4 @@
-package com.example.erfan_delavari_hw12_maktab36.controller.Activity;
+package com.example.erfan_delavari_hw13_maktab36.controller.Activity;
 
 import android.os.Bundle;
 
@@ -6,10 +6,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.erfan_delavari_hw12_maktab36.R;
-import com.example.erfan_delavari_hw12_maktab36.controller.Fragments.EnterFragment;
+import com.example.erfan_delavari_hw13_maktab36.R;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
 
