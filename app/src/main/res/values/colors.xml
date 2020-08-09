@@ -3,8 +3,7 @@
     <color name="colorPrimary">#00C853</color>
     <color name="colorPrimaryDark">#1C3910</color>
     <color name="colorSecondary">#915A09</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#081005</color>
     <color name="colorSurface">#A2B8A0</color>
-    <color name="shrine_pink_100">#F8BBD0</color>
     <color name="color_dialog_buttons">#0C1E05</color>
 </resources>

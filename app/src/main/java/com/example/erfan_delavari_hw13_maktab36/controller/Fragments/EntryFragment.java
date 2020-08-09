@@ -55,6 +55,8 @@ public class EntryFragment extends Fragment {
             for(User user : mUserList){
                 if(user.loginCheck(mEditTextUserName.getText().toString(),mEditTextPassword.getText().toString())){
                     Intent intent = TaskPagerActivity.newIntent(getActivity(),user.getUUID());
+                    mEditTextPassword.setText("");
+                    mEditTextUserName.setText("");
                     startActivity(intent);
                     userFound = true;
                 }

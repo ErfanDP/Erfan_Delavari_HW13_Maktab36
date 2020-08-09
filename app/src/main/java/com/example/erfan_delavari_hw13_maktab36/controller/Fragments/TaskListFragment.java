@@ -22,6 +22,7 @@ import com.example.erfan_delavari_hw13_maktab36.repository.RepositoryInterface;
 import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -103,6 +104,14 @@ public class TaskListFragment extends Fragment implements Serializable {
         mTaskList.add(task);
         mAdapter.notifyItemInserted(mTaskList.size()-1);
         mImageViewNoDataFound.setVisibility(View.INVISIBLE);
+    }
+
+    public void removeAllTasks(){
+        mUser.deleteAllTasks();
+        mTaskList = new ArrayList<>();
+        mAdapter.setTaskList(mTaskList);
+        mAdapter.notifyDataSetChanged();
+        mImageViewNoDataFound.setVisibility(View.VISIBLE);
     }
 
 }

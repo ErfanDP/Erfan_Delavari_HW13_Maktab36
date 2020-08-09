@@ -1,8 +1,12 @@
 package com.example.erfan_delavari_hw13_maktab36.controller.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +21,7 @@ import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.TaskListFra
 import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
 import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -24,13 +29,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.UUID;
 
 public class TaskPagerActivity extends AppCompatActivity {
+
     public static final String EXTRA_USER_ID = "com.example.erfan_delavari_hw13_maktab36.user_ID";
 
 
     private ViewPager2 mViewPager;
     private User mUser;
     private TaskPagerAdapter mTaskPagerAdapter;
-
     private FloatingActionButton mButtonAdd;
 
 
@@ -52,8 +57,39 @@ public class TaskPagerActivity extends AppCompatActivity {
         tabLayoutAndViewPagerBinder();
         mButtonAdd.setOnClickListener(v -> {
             // TODO writing a AlertDialog to Create Task and pass it to method below
-//                mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
+            // mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_pager_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_logout:
+                finish();
+                return true;
+            case R.id.menu_delete_all:
+                 new MaterialAlertDialogBuilder(this)
+                         .setMessage(R.string.delete_all_question)
+                         .setPositiveButton("im sure", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int which) {
+                                 mTaskPagerAdapter.removeAllTask();
+                             }
+                         })
+                         .setNegativeButton(android.R.string.cancel,null)
+                         .create()
+                         .show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void extraInit() {
@@ -92,7 +128,11 @@ public class TaskPagerActivity extends AppCompatActivity {
         private TaskListFragment mDoingFragment;
         private TaskListFragment mDoneFragment;
 
-
+        public void removeAllTask(){
+            mToDoFragment.removeAllTasks();
+            mDoingFragment.removeAllTasks();
+            mDoneFragment.removeAllTasks();
+        }
         public TaskPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
             mDoingFragment = TaskListFragment.newInstance(TaskState.DOING,mUser.getUUID());

@@ -93,4 +93,8 @@ public class User implements Serializable {
     public boolean loginCheck(String userName,String password){
         return this.mUserName.equals(userName) && this.mPassword.equals(password);
     }
+
+    public void deleteAllTasks(){
+        mTaskList = new ArrayList<>();
+    }
 }

@@ -21,7 +21,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     private List<Task> mTaskList;
     private OnListEmpty mOnListEmpty;
 
-    public TaskListAdapter(List<Task> taskList,OnListEmpty onListEmpty) {
+    public void setTaskList(List<Task> taskList) {
+        mTaskList = taskList;
+    }
+
+    public TaskListAdapter(List<Task> taskList, OnListEmpty onListEmpty) {
         mTaskList = taskList;
         mOnListEmpty = onListEmpty;
         if(mTaskList.size() == 0){
