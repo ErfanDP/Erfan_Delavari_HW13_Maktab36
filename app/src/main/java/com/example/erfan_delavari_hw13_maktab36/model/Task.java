@@ -1,16 +1,32 @@
 package com.example.erfan_delavari_hw13_maktab36.model;
 
+import com.example.erfan_delavari_hw13_maktab36.controller.utils.DateUtils;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class Task{
     private UUID mUUID;
     private String mName;
+    private String mDescription;
     private TaskState mTaskState;
+    private Date mDate;
+
 
     public Task(String name, TaskState taskState) {
         mUUID = UUID.randomUUID();
         mName = name;
         mTaskState = taskState;
+        mDate = DateUtils.getRandomDate(2000, 2020);
+    }
+
+    public Task(String name, String description, TaskState taskState, Date date) {
+        mUUID = UUID.randomUUID();
+        mName = name;
+        mDescription = description;
+        mTaskState = taskState;
+        mDate = date;
     }
 
     public String getName() {

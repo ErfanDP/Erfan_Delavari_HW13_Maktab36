@@ -56,7 +56,7 @@ public class TaskPagerActivity extends AppCompatActivity {
         mViewPager.setOffscreenPageLimit(3);
         tabLayoutAndViewPagerBinder();
         mButtonAdd.setOnClickListener(v -> {
-            // TODO writing a AlertDialog to Create Task and pass it to method below
+
             // mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
         });
     }
