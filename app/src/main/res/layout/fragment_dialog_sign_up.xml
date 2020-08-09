@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/view_entry_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".controller.Fragments.EnterFragment">
+    android:layout_height="wrap_content"
+    android:background="@color/colorSurface"
+    tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.DialogSignUpFragment">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/entry_edit_text_user_name"
@@ -13,13 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="32dp"
         android:drawableEnd="@drawable/ic_user_name"
         android:ems="10"
         android:hint="@string/entry_hint_username"
         android:importantForAutofill="no"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,34 +31,22 @@
         android:ems="10"
         android:hint="@string/entry_hint_password"
         android:importantForAutofill="no"
-        android:inputType="number"
+        android:inputType="text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/entry_edit_text_user_name" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/entry_button_done"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/entry_edit_text_number_of_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_action_login"
-        app:backgroundTint="#2E7D32"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_action_signup"
-        app:backgroundTint="@color/colorSurface"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/entry_button_done" />
+        android:layout_marginTop="8dp"
+        android:ems="7"
+        android:hint="@string/number_of_tasks"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/entry_edit_text_password"
+        app:layout_constraintTop_toBottomOf="@id/entry_edit_text_password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

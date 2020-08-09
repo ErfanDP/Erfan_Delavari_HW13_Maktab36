@@ -90,9 +90,9 @@ public class TaskPagerActivity extends AppCompatActivity {
 
         public TaskPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
-            mDoingFragment = TaskListFragment.newInstance(TaskState.DOING);
-            mDoneFragment = TaskListFragment.newInstance(TaskState.DONE);
-            mToDoFragment = TaskListFragment.newInstance(TaskState.TODO);
+            mDoingFragment = TaskListFragment.newInstance(TaskState.DOING,mUser.getUUID());
+            mDoneFragment = TaskListFragment.newInstance(TaskState.DONE,mUser.getUUID());
+            mToDoFragment = TaskListFragment.newInstance(TaskState.TODO,mUser.getUUID());
         }
 
 
