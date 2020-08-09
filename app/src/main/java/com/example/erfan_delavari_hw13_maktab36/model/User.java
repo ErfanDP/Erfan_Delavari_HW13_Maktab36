@@ -9,9 +9,9 @@ public class User implements Serializable {
     private UUID mUUID;
     private List<Task> mTaskList;
     private String mUserName;
-    private int mPassword;
+    private String mPassword;
 
-    public User(String userName, int password,int numberOfTasks) {
+    public User(String userName, String password,int numberOfTasks) {
         mUserName = userName;
         mPassword = password;
         mUUID = UUID.randomUUID();
@@ -82,11 +82,11 @@ public class User implements Serializable {
         mUserName = userName;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return mPassword;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         mPassword = password;
     }
 }

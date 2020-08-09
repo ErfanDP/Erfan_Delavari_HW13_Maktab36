@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorSurface"
+    android:background="#A2B8A0"
     tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.DialogSignUpFragment">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/entry_edit_text_user_name"
+        android:id="@+id/entry_sign_up_edit_text_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/entry_edit_text_password"
+        android:id="@+id/entry_sign_up_edit_text_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -34,10 +34,10 @@
         android:inputType="text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/entry_edit_text_user_name" />
+        app:layout_constraintTop_toBottomOf="@id/entry_sign_up_edit_text_user_name" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/entry_edit_text_number_of_tasks"
+        android:id="@+id/entry_sign_up_edit_text_number_of_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -46,7 +46,7 @@
         android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/entry_edit_text_password"
-        app:layout_constraintTop_toBottomOf="@id/entry_edit_text_password" />
+        app:layout_constraintTop_toBottomOf="@id/entry_sign_up_edit_text_password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
