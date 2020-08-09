@@ -16,7 +16,7 @@ public class User implements Serializable {
         mPassword = password;
         mUUID = UUID.randomUUID();
         for (int i = 0; i < numberOfTasks; i++) {
-            mTaskList.add(Task.randomTaskCreator(userName));
+            mTaskList.add(Task.randomTaskCreator(userName+"#"+(i+1)));
         }
     }
 
