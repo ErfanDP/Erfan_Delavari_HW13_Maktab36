@@ -7,5 +7,5 @@
     <string name="done">Done</string>
     <string name="sign_up">SignUp</string>
     <string name="number_of_tasks">number of tasks</string>
-    <string name="defult_number_of_tasks">10</string>
+    <string name="user_not_found">User Not Found</string>
 </resources>

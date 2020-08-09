@@ -1,5 +1,6 @@
 package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,18 +9,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.erfan_delavari_hw13_maktab36.R;
+import com.example.erfan_delavari_hw13_maktab36.controller.Activity.TaskPagerActivity;
+import com.example.erfan_delavari_hw13_maktab36.model.User;
+import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class EnterFragment extends Fragment {
+import java.util.List;
+
+public class EntryFragment extends Fragment {
+
+    public static final String TAG_DIALOG_SIGN_UP = "DialogSignUp";
+
+    private List<User> mUserList = UserRepository.getRepository().getList();
+
     private EditText mEditTextUserName;
     private EditText mEditTextPassword;
     private FloatingActionButton mButtonDone;
     private FloatingActionButton mButtonSignUp;
 
-    public static EnterFragment newInstance() {
-        return new EnterFragment();
+    public static EntryFragment newInstance() {
+        return new EntryFragment();
     }
 
     @Override
@@ -38,20 +50,18 @@ public class EnterFragment extends Fragment {
 
     private void listeners() {
 
-        mButtonDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO start the activity with users UUID
+        mButtonDone.setOnClickListener(v -> {
+            for(User user : mUserList){
+                if(user.loginCheck(mEditTextUserName.getText().toString(),mEditTextPassword.getText().toString())){
+                    Intent intent = TaskPagerActivity.newIntent(getActivity(),user.getUUID());
+                    startActivity(intent);
+                }
             }
+            Toast.makeText(getActivity(), R.string.user_not_found,Toast.LENGTH_SHORT).show();
         });
-
-        mButtonSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mButtonSignUp.setOnClickListener(v ->
                 DialogSignUpFragment.newInstance(mEditTextUserName.getText().toString()
-                        ,mEditTextPassword.getText().toString()).show(getFragmentManager(),"TaG");
-            }
-        });
+                ,mEditTextPassword.getText().toString()).show(getFragmentManager(), TAG_DIALOG_SIGN_UP));
     }
 
     private void findViews(View view) {

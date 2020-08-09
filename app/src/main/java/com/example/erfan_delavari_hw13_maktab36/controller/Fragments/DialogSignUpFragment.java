@@ -54,9 +54,8 @@ public class DialogSignUpFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_sign_up, null);
 
         findViews(view);
-        mEditTextUserName.setText(mUserName);
-        mEditTextPassword.setText(mPassword);
-        mEditTextNumberOFTasks.setText(R.string.defult_number_of_tasks);
+        viewInit();
+
         return new MaterialAlertDialogBuilder(getActivity())
                 .setIcon(R.drawable.ic_action_signup)
                 .setTitle(R.string.sign_up)
@@ -68,6 +67,11 @@ public class DialogSignUpFragment extends DialogFragment {
                                         Integer.parseInt(mEditTextNumberOFTasks.getText().toString()))))
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
+    }
+
+    private void viewInit() {
+        mEditTextUserName.setText(mUserName);
+        mEditTextPassword.setText(mPassword);
     }
 
     private void findViews(View view) {

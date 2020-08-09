@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class User implements Serializable {
     private UUID mUUID;
-    private List<Task> mTaskList;
+    private List<Task> mTaskList = new ArrayList<>();
     private String mUserName;
     private String mPassword;
 
@@ -88,5 +88,9 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         mPassword = password;
+    }
+
+    public boolean loginCheck(String userName,String password){
+        return this.mUserName.equals(userName) && this.mPassword.equals(password);
     }
 }

@@ -31,7 +31,7 @@
         android:ems="10"
         android:hint="@string/entry_hint_password"
         android:importantForAutofill="no"
-        android:inputType="text"
+        android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/entry_sign_up_edit_text_user_name" />
@@ -45,7 +45,7 @@
         android:hint="@string/number_of_tasks"
         android:importantForAutofill="no"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/entry_edit_text_password"
+        app:layout_constraintStart_toStartOf="@+id/entry_sign_up_edit_text_password"
         app:layout_constraintTop_toBottomOf="@id/entry_sign_up_edit_text_password" />
 
 
