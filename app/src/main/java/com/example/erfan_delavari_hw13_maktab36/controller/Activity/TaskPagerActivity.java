@@ -16,6 +16,7 @@ import com.example.erfan_delavari_hw13_maktab36.R;
 import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.TaskListFragment;
 import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
 import com.example.erfan_delavari_hw13_maktab36.model.User;
+import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -43,6 +44,7 @@ public class TaskPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_pager);
+        extraInit();
         findViews();
         mTaskPagerAdapter = new TaskPagerAdapter(this);
         mViewPager.setAdapter(mTaskPagerAdapter);
@@ -54,6 +56,9 @@ public class TaskPagerActivity extends AppCompatActivity {
         });
     }
 
+    private void extraInit() {
+        mUser = UserRepository.getRepository().get((UUID) getIntent().getSerializableExtra(EXTRA_USER_ID));
+    }
 
 
     private void findViews() {

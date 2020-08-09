@@ -51,13 +51,16 @@ public class EntryFragment extends Fragment {
     private void listeners() {
 
         mButtonDone.setOnClickListener(v -> {
+            boolean userFound = false;
             for(User user : mUserList){
                 if(user.loginCheck(mEditTextUserName.getText().toString(),mEditTextPassword.getText().toString())){
                     Intent intent = TaskPagerActivity.newIntent(getActivity(),user.getUUID());
                     startActivity(intent);
+                    userFound = true;
                 }
             }
-            Toast.makeText(getActivity(), R.string.user_not_found,Toast.LENGTH_SHORT).show();
+            if(!userFound)
+                Toast.makeText(getActivity(), R.string.user_not_found,Toast.LENGTH_SHORT).show();
         });
         mButtonSignUp.setOnClickListener(v ->
                 DialogSignUpFragment.newInstance(mEditTextUserName.getText().toString()
