@@ -49,6 +49,22 @@ public class Task{
         mTaskState = taskState;
     }
 
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public Date getDate() {
+        return mDate;
+    }
+
+    public void setDate(Date date) {
+        mDate = date;
+    }
+
     public static Task randomTaskCreator(String name){
         TaskState taskState = TaskState.DOING;
         switch (((int)(Math.random()*10)) % 3){

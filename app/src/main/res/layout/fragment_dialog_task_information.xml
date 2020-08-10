@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.TaskInformationFragment">
+    tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.DialogTaskInformationFragment">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tasks_name"
@@ -28,12 +28,12 @@
         android:inputType="textMultiLine"
         android:scrollbars="vertical"
         android:scrollHorizontally="false"
-        app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroup_task_state"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tasks_name" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroup_task_state"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -65,7 +65,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/button_date"
+        android:id="@+id/button_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -73,11 +73,11 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_time"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintStart_toEndOf="@+id/button_date"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_task_state" />
 
     <Button
-        android:id="@+id/button_time"
+        android:id="@+id/button_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
