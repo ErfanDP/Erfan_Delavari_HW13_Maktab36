@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.erfan_delavari_hw13_maktab36.R;
 import com.example.erfan_delavari_hw13_maktab36.model.Task;
 import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
+import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ public class DialogTaskInformationFragment extends DialogFragment {
 
     private static final String ARG_EDITABLE = "editable";
     public static final String ARG_TASK_ID = "taskID";
-    public static final String TAG_DIALOG_TASK_INFORMATION = "dialogTaskInformation";
     public static final String EXTRA_HAS_CHANGED = "hasChanged";
     public static final String EXTRA_TASK = "extra_task";
 
@@ -36,7 +36,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private Button mButtonDate;
     private Button mButtonTime;
 
-
+    private User mUser;
     private Task mTask;
     private boolean mEditable;
 
@@ -65,17 +65,20 @@ public class DialogTaskInformationFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_task_information, null);
         findViews(view);
         viewInit();
-        editableCheck();
+        editableCheck(view);
         return materialAlertDialogBuilder(view).create();
     }
 
-    private void editableCheck() {
+    private void editableCheck(View view) {
         if(!mEditable){
             mEditTextName.setEnabled(false);
             mEditTextDescription.setEnabled(false);
             mButtonDate.setEnabled(false);
             mButtonTime.setEnabled(false);
             mRadioGroupTaskState.setEnabled(false);
+            view.findViewById(R.id.radioButton_doing).setEnabled(false);
+            view.findViewById(R.id.radioButton_done).setEnabled(false);
+            view.findViewById(R.id.radioButton_todo).setEnabled(false);
         }
     }
 
@@ -111,7 +114,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
                         case R.id.radioButton_done:
                             mTask.setTaskState(TaskState.DONE);
                             break;
-                        case R.id.radioButton_todo:
+                        default:
                             mTask.setTaskState(TaskState.TODO);
                     }
                     setResult(true);
@@ -121,8 +124,11 @@ public class DialogTaskInformationFragment extends DialogFragment {
                 .setView(view);
         if (!mEditable) {
             materialAlertDialogBuilder.setNeutralButton(R.string.edit, (dialog, which) -> {
-                DialogTaskInformationFragment.newInstance(true,mTask)
-                        .show(getTargetFragment().getFragmentManager(), TAG_DIALOG_TASK_INFORMATION);
+
+                DialogTaskInformationFragment dialogTaskInformationFragment =
+                        DialogTaskInformationFragment.newInstance(true,mTask);
+                dialogTaskInformationFragment.setTargetFragment(getTargetFragment(),TaskListFragment.REQUEST_CODE_TASK_INFORMATION);
+                dialogTaskInformationFragment.show(getTargetFragment().getFragmentManager(),TaskListFragment.TAG_DIALOG_TASK_INFORMATION);
                 dismiss();
             });
         }

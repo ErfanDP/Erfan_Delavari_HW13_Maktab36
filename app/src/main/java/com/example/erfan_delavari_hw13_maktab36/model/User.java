@@ -49,8 +49,13 @@ public class User implements Serializable {
 
     public void update(Task task) {
         Task updateTask = get(task.getUUID());
+        if(updateTask == null){
+            return;
+        }
         updateTask.setName(task.getName());
         updateTask.setTaskState(task.getTaskState());
+        updateTask.setDescription(task.getDescription());
+        updateTask.setDate(task.getDate());
     }
 
     public void insert(Task task) {

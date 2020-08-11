@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erfan_delavari_hw13_maktab36.R;
+import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.DialogTaskInformationFragment;
+import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.TaskPagerFragment;
 import com.example.erfan_delavari_hw13_maktab36.model.Task;
 
 import java.util.List;
@@ -20,14 +22,16 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     private List<Task> mTaskList;
     private OnListEmpty mOnListEmpty;
+    private OnRowClick mOnRowClick;
 
     public void setTaskList(List<Task> taskList) {
         mTaskList = taskList;
     }
 
-    public TaskListAdapter(List<Task> taskList, OnListEmpty onListEmpty) {
+    public TaskListAdapter(List<Task> taskList, OnListEmpty onListEmpty,OnRowClick onRowClick) {
         mTaskList = taskList;
         mOnListEmpty = onListEmpty;
+        mOnRowClick = onRowClick;
         if(mTaskList.size() == 0){
             mOnListEmpty.onListIsEmpty();
         }
@@ -57,7 +61,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     @Override
     public void onBindViewHolder(@NonNull TaskListAdapter.TaskHolder holder, int position) {
         holder.viewBinder(mTaskList.get(position));
-
     }
 
     @Override
@@ -67,20 +70,39 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     class TaskHolder extends RecyclerView.ViewHolder{
 
+        private Task mTask;
         private TextView mName;
+        private TextView mDate;
+        private TextView mDescription;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
-            mName  = itemView.findViewById(R.id.list_row_name);
+            mName = itemView.findViewById(R.id.list_row_name);
+            mDate = itemView.findViewById(R.id.list_row_date);
+            mDescription = itemView.findViewById(R.id.list_row_description);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnRowClick.rowClick(mTask);
+                }
+            });
         }
 
         public void viewBinder(Task task){
+            mTask = task;
             mName.setText(task.getName());
+            mDescription.setText(task.getDescription());
+            mDate.setText(task.getDate().toString());
         }
     }
 
     public interface OnListEmpty{
         void onListIsEmpty();
+    }
+
+    public interface OnRowClick {
+        void rowClick(Task task);
     }
 
 }

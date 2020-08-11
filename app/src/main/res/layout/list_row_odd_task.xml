@@ -13,9 +13,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="@+id/list_row_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="TestTestTestTest" />
+        tools:text="Test" />
 
     <TextView
         android:id="@+id/list_row_date"
@@ -23,13 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/list_row_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_row_name"
-        tools:text="test" />
+        tools:text="fdjskhfkjhfkjdshkfkfkfj" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/list_row_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -37,8 +37,9 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/list_row_date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/list_row_name"
+        app:layout_constraintStart_toEndOf="@+id/list_row_date"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="test" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
