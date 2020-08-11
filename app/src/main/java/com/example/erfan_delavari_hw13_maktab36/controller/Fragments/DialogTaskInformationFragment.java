@@ -122,7 +122,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
         if (!mEditable) {
             materialAlertDialogBuilder.setNeutralButton(R.string.edit, (dialog, which) -> {
                 DialogTaskInformationFragment.newInstance(true,mTask)
-                        .show(getFragmentManager(), TAG_DIALOG_TASK_INFORMATION);
+                        .show(getTargetFragment().getFragmentManager(), TAG_DIALOG_TASK_INFORMATION);
                 dismiss();
             });
         }

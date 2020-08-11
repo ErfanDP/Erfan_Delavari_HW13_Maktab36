@@ -84,12 +84,7 @@ public class TaskListFragment extends Fragment implements Serializable {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), rowNumbers));
         mTaskList =mUser.getTaskListByTaskState(mTaskState);
         mAdapter = new TaskListAdapter(mTaskList
-                , new TaskListAdapter.OnListEmpty() {
-            @Override
-            public void onListIsEmpty() {
-                mImageViewNoDataFound.setVisibility(View.VISIBLE);
-            }
-        });
+                , () -> mImageViewNoDataFound.setVisibility(View.VISIBLE));
         Log.d("App",mTaskState+"Fragment mTaskList:"+mTaskList.toString());
         mRecyclerView.setAdapter(mAdapter);
     }
