@@ -2,11 +2,11 @@ package com.example.erfan_delavari_hw13_maktab36.model;
 
 import com.example.erfan_delavari_hw13_maktab36.controller.utils.DateUtils;
 
-import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class Task{
+public class Task implements Serializable {
     private UUID mUUID;
     private String mName;
     private String mDescription;
@@ -14,11 +14,12 @@ public class Task{
     private Date mDate;
 
 
-    public Task(String name, TaskState taskState) {
+    public Task() {
         mUUID = UUID.randomUUID();
-        mName = name;
-        mTaskState = taskState;
-        mDate = DateUtils.getRandomDate(2000, 2020);
+        mName = "";
+        mDescription = "";
+        mTaskState = TaskState.DONE;
+        mDate = new Date();
     }
 
     public Task(String name, String description, TaskState taskState, Date date) {
@@ -75,6 +76,7 @@ public class Task{
                 taskState = TaskState.TODO;
                 break;
         }
-        return new Task(name,taskState);
+        String description = "this is random generated Task by system";
+        return new Task(name,description,taskState,DateUtils.getRandomDate(2000, 2020));
     }
 }

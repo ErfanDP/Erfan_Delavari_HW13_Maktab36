@@ -2,29 +2,25 @@ package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.example.erfan_delavari_hw13_maktab36.R;
 import com.example.erfan_delavari_hw13_maktab36.model.Task;
-import com.example.erfan_delavari_hw13_maktab36.model.User;
-import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
+import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.UUID;
 
 public class DialogTaskInformationFragment extends DialogFragment {
 
@@ -42,15 +38,13 @@ public class DialogTaskInformationFragment extends DialogFragment {
 
 
     private Task mTask;
-    private User mUser;
     private boolean mEditable;
 
-    public static DialogTaskInformationFragment newInstance(boolean editable, UUID userId, UUID taskId) {
+    public static DialogTaskInformationFragment newInstance(boolean editable,Task task) {
         DialogTaskInformationFragment fragment = new DialogTaskInformationFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_EDITABLE, editable);
-        args.putSerializable(ARG_USER_ID, userId);
-        args.putSerializable(ARG_TASK_ID, taskId);
+        args.putSerializable(ARG_TASK_ID, task);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,8 +54,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mEditable = getArguments().getBoolean(ARG_EDITABLE);
-            mUser = UserRepository.getRepository().get((UUID) getArguments().getSerializable(ARG_USER_ID));
-            mTask = mUser.get((UUID) getArguments().getSerializable(ARG_TASK_ID));
+            mTask = (Task) getArguments().getSerializable(ARG_TASK_ID);
         }
     }
 
@@ -109,7 +102,18 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private MaterialAlertDialogBuilder materialAlertDialogBuilder(View view) {
         MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
                 .setPositiveButton(R.string.save, (dialog, which) -> {
-                    mUser.update(mTask);
+                    mTask.setName(mEditTextName.getText().toString());
+                    mTask.setDescription(mEditTextDescription.getText().toString());
+                    switch (mRadioGroupTaskState.getCheckedRadioButtonId()){
+                        case R.id.radioButton_doing:
+                            mTask.setTaskState(TaskState.DOING);
+                            break;
+                        case R.id.radioButton_done:
+                            mTask.setTaskState(TaskState.DONE);
+                            break;
+                        case R.id.radioButton_todo:
+                            mTask.setTaskState(TaskState.TODO);
+                    }
                     setResult(true);
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
@@ -119,7 +123,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
                 .setView(view);
         if (!mEditable) {
             materialAlertDialogBuilder.setNeutralButton(R.string.edit, (dialog, which) -> {
-                DialogTaskInformationFragment.newInstance(true,mUser.getUUID(),mTask.getUUID())
+                DialogTaskInformationFragment.newInstance(true,mTask)
                         .show(getFragmentManager(), TAG_DIALOG_TASK_INFORMATION);
                 dismiss();
             });
