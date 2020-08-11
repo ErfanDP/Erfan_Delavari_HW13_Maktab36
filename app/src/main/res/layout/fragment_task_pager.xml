@@ -5,7 +5,8 @@
     android:id="@+id/root_pager_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.Activity.TaskPagerActivity" >
+    android:background="@color/colorBackground"
+    tools:context=".controller.Activity.TaskPagerActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_tasks"
@@ -16,7 +17,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2_tasks"
