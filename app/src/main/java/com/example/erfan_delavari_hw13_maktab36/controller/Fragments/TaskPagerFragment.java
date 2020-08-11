@@ -30,7 +30,8 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.UUID;
 
 public class TaskPagerFragment extends Fragment {
-    public static final int REQUEST_CODE_TASK_INFORMATION = 1;
+    public static final int REQUEST_CODE_TASK_INFORMATION_ADD = 1;
+    public static final int REQUEST_CODE_TASK_INFORMATION_EDIT = 2;
     public static final String ARG_USER_ID = "arg_user_id";
     public static final String TAG_TASK_INFORMATION_DIALOG = "tag_task_information_dialog";
 
@@ -79,10 +80,14 @@ public class TaskPagerFragment extends Fragment {
     private void listeners() {
         mButtonAdd.setOnClickListener(v -> {
             Task task = new Task();
-            DialogTaskInformationFragment dialogTaskInformationFragment= DialogTaskInformationFragment.newInstance(true,task);
-            dialogTaskInformationFragment.setTargetFragment(TaskPagerFragment.this, REQUEST_CODE_TASK_INFORMATION);
-            dialogTaskInformationFragment.show(getFragmentManager(), TAG_TASK_INFORMATION_DIALOG);
+            creatingDialogTaskInformation(task,TaskPagerFragment.this,true, REQUEST_CODE_TASK_INFORMATION_ADD);
         });
+    }
+
+    public static void creatingDialogTaskInformation(Task task,Fragment fragment,boolean editable,int requestCode) {
+        DialogTaskInformationFragment dialogTaskInformationFragment= DialogTaskInformationFragment.newInstance(editable,task);
+        dialogTaskInformationFragment.setTargetFragment(fragment, requestCode);
+        dialogTaskInformationFragment.show(fragment.getFragmentManager(), TAG_TASK_INFORMATION_DIALOG);
     }
 
     @Override
@@ -93,7 +98,14 @@ public class TaskPagerFragment extends Fragment {
             return;
         }
 
-        if(requestCode == REQUEST_CODE_TASK_INFORMATION){
+        if(requestCode == REQUEST_CODE_TASK_INFORMATION_EDIT){
+            Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
+            if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
+                mTaskPagerAdapter.notifyLists(task);
+            }
+        }
+
+        if(requestCode == REQUEST_CODE_TASK_INFORMATION_ADD){
             Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
             if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
                     mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
@@ -124,7 +136,6 @@ public class TaskPagerFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_pager_activity, menu);
-
     }
 
 
@@ -160,25 +171,23 @@ public class TaskPagerFragment extends Fragment {
         private TaskListFragment mDoneFragment;
 
         public void removeAllTask(){
-            mToDoFragment.removeAllTasks();
-            mDoingFragment.removeAllTasks();
-            mDoneFragment.removeAllTasks();
+            getFragment(TaskState.DOING).removeAllTasks();
+            getFragment(TaskState.DONE).removeAllTasks();
+            getFragment(TaskState.TODO).removeAllTasks();
         }
 
 
         public TaskPagerAdapter(@NonNull Fragment fragment) {
             super(fragment);
-            TaskListFragment.NotifyLists notifyLists = new TaskListFragment.NotifyLists() {
-                @Override
-                public void notifyLists(Task task) {
-                    getFragment(TaskState.DONE).notifyAdapter(task);
-                    getFragment(TaskState.DOING).notifyAdapter(task);
-                    getFragment(TaskState.TODO).notifyAdapter(task);
-                }
-            };
-            mDoingFragment = TaskListFragment.newInstance(TaskState.DOING, mUser.getUUID(),notifyLists);
-            mDoneFragment = TaskListFragment.newInstance(TaskState.DONE,mUser.getUUID(),notifyLists);
-            mToDoFragment = TaskListFragment.newInstance(TaskState.TODO,mUser.getUUID(),notifyLists);
+            mDoingFragment = TaskListFragment.newInstance(TaskState.DOING, mUser.getUUID());
+            mDoneFragment = TaskListFragment.newInstance(TaskState.DONE,mUser.getUUID());
+            mToDoFragment = TaskListFragment.newInstance(TaskState.TODO,mUser.getUUID());
+        }
+
+        public void notifyLists(Task task) {
+            getFragment(TaskState.DONE).notifyAdapter(task);
+            getFragment(TaskState.DOING).notifyAdapter(task);
+            getFragment(TaskState.TODO).notifyAdapter(task);
         }
 
 

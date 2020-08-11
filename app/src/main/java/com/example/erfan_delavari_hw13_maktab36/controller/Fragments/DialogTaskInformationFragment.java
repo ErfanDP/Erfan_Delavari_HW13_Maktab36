@@ -61,6 +61,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.fragment_dialog_task_information, null);
         findViews(view);
@@ -117,29 +118,25 @@ public class DialogTaskInformationFragment extends DialogFragment {
                         default:
                             mTask.setTaskState(TaskState.TODO);
                     }
-                    setResult(true);
+                    setResult(true,Activity.RESULT_OK);
                 })
                 .setNegativeButton(android.R.string.cancel,null)
                 .setTitle(mEditable ? "Task Edit Table" : "Task Information")
                 .setView(view);
         if (!mEditable) {
             materialAlertDialogBuilder.setNeutralButton(R.string.edit, (dialog, which) -> {
-
-                DialogTaskInformationFragment dialogTaskInformationFragment =
-                        DialogTaskInformationFragment.newInstance(true,mTask);
-                dialogTaskInformationFragment.setTargetFragment(getTargetFragment(),TaskListFragment.REQUEST_CODE_TASK_INFORMATION);
-                dialogTaskInformationFragment.show(getTargetFragment().getFragmentManager(),TaskListFragment.TAG_DIALOG_TASK_INFORMATION);
-                dismiss();
+                TaskPagerFragment.creatingDialogTaskInformation(mTask,getTargetFragment(),true,TaskPagerFragment.REQUEST_CODE_TASK_INFORMATION_EDIT);
+                setResult(false,Activity.RESULT_CANCELED);
             });
         }
         return materialAlertDialogBuilder;
     }
 
-    private void setResult(boolean hasChanged) {
+    private void setResult(boolean hasChanged,int resultCode) {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_HAS_CHANGED,hasChanged);
         intent.putExtra(EXTRA_TASK,mTask);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,intent);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode,intent);
     }
 
     private void findViews(View view) {
