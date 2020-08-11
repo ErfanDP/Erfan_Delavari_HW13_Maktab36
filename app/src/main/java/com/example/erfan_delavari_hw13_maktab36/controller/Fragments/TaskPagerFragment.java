@@ -32,6 +32,7 @@ import java.util.UUID;
 public class TaskPagerFragment extends Fragment {
     public static final int REQUEST_CODE_TASK_INFORMATION_ADD = 1;
     public static final int REQUEST_CODE_TASK_INFORMATION_EDIT = 2;
+
     public static final String ARG_USER_ID = "arg_user_id";
     public static final String TAG_TASK_INFORMATION_DIALOG = "tag_task_information_dialog";
 
@@ -100,8 +101,14 @@ public class TaskPagerFragment extends Fragment {
 
         if(requestCode == REQUEST_CODE_TASK_INFORMATION_EDIT){
             Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
+            if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_DELETED,false)){
+                mTaskPagerAdapter.deleteTask(task);
+                return;
+            }
+
             if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
                 mTaskPagerAdapter.notifyLists(task);
+                return;
             }
         }
 
@@ -189,6 +196,11 @@ public class TaskPagerFragment extends Fragment {
             getFragment(TaskState.DOING).notifyAdapter(task);
             getFragment(TaskState.TODO).notifyAdapter(task);
         }
+
+        public void deleteTask(Task task){
+            getFragment(task.getTaskState()).deleteTask(task);
+        }
+
 
 
 

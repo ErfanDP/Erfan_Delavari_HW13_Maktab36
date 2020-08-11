@@ -114,8 +114,19 @@ public class TaskListFragment extends Fragment implements Serializable {
 
     public void notifyAdapter(Task task){
         mUser.update(task);
-        mAdapter.setTaskList(mUser.getTaskListByTaskState(mTaskState));
+        mTaskList = mUser.getTaskListByTaskState(mTaskState);
+        mAdapter.setTaskList(mTaskList);
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void deleteTask(Task task){
+        mUser.delete(task);
+        mTaskList.remove(task);
+        mAdapter.setTaskList(mTaskList);
+        mAdapter.notifyDataSetChanged();
+        if(mAdapter.getItemCount() == 0){
+            mImageViewNoDataFound.setVisibility(View.VISIBLE);
+        }
     }
 
 }

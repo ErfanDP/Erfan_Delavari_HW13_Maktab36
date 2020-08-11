@@ -29,6 +29,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
     public static final String ARG_TASK_ID = "taskID";
     public static final String EXTRA_HAS_CHANGED = "hasChanged";
     public static final String EXTRA_TASK = "extra_task";
+    public static final String EXTRA_DELETED = "extra_deleted";
 
     private EditText mEditTextName;
     private EditText mEditTextDescription;
@@ -40,7 +41,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private Task mTask;
     private boolean mEditable;
 
-    public static DialogTaskInformationFragment newInstance(boolean editable,Task task) {
+    public static DialogTaskInformationFragment newInstance(boolean editable, Task task) {
         DialogTaskInformationFragment fragment = new DialogTaskInformationFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_EDITABLE, editable);
@@ -65,13 +66,20 @@ public class DialogTaskInformationFragment extends DialogFragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.fragment_dialog_task_information, null);
         findViews(view);
+        mButtonDate.setOnClickListener(v -> {
+           //TODO datePiker  fragment
+        });
+
+        mButtonTime.setOnClickListener(v -> {
+            //TODO timePiker fragment
+        });
         viewInit();
         editableCheck(view);
         return materialAlertDialogBuilder(view).create();
     }
 
     private void editableCheck(View view) {
-        if(!mEditable){
+        if (!mEditable) {
             mEditTextName.setEnabled(false);
             mEditTextDescription.setEnabled(false);
             mButtonDate.setEnabled(false);
@@ -87,10 +95,10 @@ public class DialogTaskInformationFragment extends DialogFragment {
         mEditTextName.setText(mTask.getName());
         mEditTextDescription.setText(mTask.getDescription());
         SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH);
-        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss",Locale.ENGLISH);
+        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
         mButtonDate.setText(simpleDateFormatDate.format(mTask.getDate()));
         mButtonTime.setText(simpleDateFormatTime.format(mTask.getDate()));
-        switch (mTask.getTaskState()){
+        switch (mTask.getTaskState()) {
             case TODO:
                 mRadioGroupTaskState.check(R.id.radioButton_todo);
                 break;
@@ -105,38 +113,45 @@ public class DialogTaskInformationFragment extends DialogFragment {
 
     private MaterialAlertDialogBuilder materialAlertDialogBuilder(View view) {
         MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
-                .setPositiveButton(R.string.save, (dialog, which) -> {
-                    mTask.setName(mEditTextName.getText().toString());
-                    mTask.setDescription(mEditTextDescription.getText().toString());
-                    switch (mRadioGroupTaskState.getCheckedRadioButtonId()){
-                        case R.id.radioButton_doing:
-                            mTask.setTaskState(TaskState.DOING);
-                            break;
-                        case R.id.radioButton_done:
-                            mTask.setTaskState(TaskState.DONE);
-                            break;
-                        default:
-                            mTask.setTaskState(TaskState.TODO);
-                    }
-                    setResult(true,Activity.RESULT_OK);
-                })
-                .setNegativeButton(android.R.string.cancel,null)
+
+                .setNegativeButton(android.R.string.cancel, null)
                 .setTitle(mEditable ? "Task Edit Table" : "Task Information")
                 .setView(view);
         if (!mEditable) {
-            materialAlertDialogBuilder.setNeutralButton(R.string.edit, (dialog, which) -> {
-                TaskPagerFragment.creatingDialogTaskInformation(mTask,getTargetFragment(),true,TaskPagerFragment.REQUEST_CODE_TASK_INFORMATION_EDIT);
-                setResult(false,Activity.RESULT_CANCELED);
+            materialAlertDialogBuilder
+                    .setPositiveButton(R.string.edit, (dialog, which) -> {
+                        TaskPagerFragment.creatingDialogTaskInformation(mTask, getTargetFragment()
+                                , true, TaskPagerFragment.REQUEST_CODE_TASK_INFORMATION_EDIT);
+                        setResult(false, Activity.RESULT_CANCELED, false);
+                    })
+                    .setNeutralButton(R.string.delete, (dialog, which) ->
+                            setResult(false, Activity.RESULT_OK, true));
+        } else {
+            materialAlertDialogBuilder.setPositiveButton(R.string.save, (dialog, which) -> {
+                mTask.setName(mEditTextName.getText().toString());
+                mTask.setDescription(mEditTextDescription.getText().toString());
+                switch (mRadioGroupTaskState.getCheckedRadioButtonId()) {
+                    case R.id.radioButton_doing:
+                        mTask.setTaskState(TaskState.DOING);
+                        break;
+                    case R.id.radioButton_done:
+                        mTask.setTaskState(TaskState.DONE);
+                        break;
+                    default:
+                        mTask.setTaskState(TaskState.TODO);
+                }
+                setResult(true, Activity.RESULT_OK, false);
             });
         }
         return materialAlertDialogBuilder;
     }
 
-    private void setResult(boolean hasChanged,int resultCode) {
+    private void setResult(boolean hasChanged, int resultCode, boolean deleted) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_HAS_CHANGED,hasChanged);
-        intent.putExtra(EXTRA_TASK,mTask);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode,intent);
+        intent.putExtra(EXTRA_HAS_CHANGED, hasChanged);
+        intent.putExtra(EXTRA_TASK, mTask);
+        intent.putExtra(EXTRA_DELETED, deleted);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
     private void findViews(View view) {

@@ -97,6 +97,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         }
     }
 
+
     public interface OnListEmpty{
         void onListIsEmpty();
     }
