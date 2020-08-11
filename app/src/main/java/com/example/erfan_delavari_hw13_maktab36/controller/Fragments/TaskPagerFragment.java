@@ -1,5 +1,7 @@
 package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -68,12 +71,30 @@ public class TaskPagerFragment extends Fragment {
         tabLayoutAndViewPagerBinder(view);
         mButtonAdd.setOnClickListener(v -> {
             Task task = new Task();
-            mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
             DialogTaskInformationFragment dialogTaskInformationFragment= DialogTaskInformationFragment.newInstance(true,task);
             dialogTaskInformationFragment.setTargetFragment(TaskPagerFragment.this, REQUEST_CODE_TASK_INFORMATION);
             dialogTaskInformationFragment.show(getFragmentManager(), TAG_TASK_INFORMATION_DIALOG);
         });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode != Activity.RESULT_OK || data == null){
+            return;
+        }
+
+        if(requestCode == REQUEST_CODE_TASK_INFORMATION){
+            Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
+            if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
+                if(!mUser.getList().contains(task))
+                    mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
+                else
+                    mTaskPagerAdapter.getFragment(task.getTaskState()).notifyAdapter();
+            }
+        }
     }
 
     @Override

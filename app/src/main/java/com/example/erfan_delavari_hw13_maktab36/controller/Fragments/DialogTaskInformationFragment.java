@@ -25,10 +25,10 @@ import java.util.Locale;
 public class DialogTaskInformationFragment extends DialogFragment {
 
     private static final String ARG_EDITABLE = "editable";
-    public static final String ARG_USER_ID = "userID";
     public static final String ARG_TASK_ID = "taskID";
     public static final String TAG_DIALOG_TASK_INFORMATION = "dialogTaskInformation";
     public static final String EXTRA_HAS_CHANGED = "hasChanged";
+    public static final String EXTRA_TASK = "extra_task";
 
     private EditText mEditTextName;
     private EditText mEditTextDescription;
@@ -116,9 +116,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
                     }
                     setResult(true);
                 })
-                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-                    setResult(false);
-                })
+                .setNegativeButton(android.R.string.cancel,null)
                 .setTitle(mEditable ? "Task Edit Table" : "Task Information")
                 .setView(view);
         if (!mEditable) {
@@ -134,6 +132,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private void setResult(boolean hasChanged) {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_HAS_CHANGED,hasChanged);
+        intent.putExtra(EXTRA_TASK,mTask);
         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,intent);
     }
 

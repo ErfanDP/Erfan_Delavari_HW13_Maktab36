@@ -4,6 +4,7 @@ import com.example.erfan_delavari_hw13_maktab36.controller.utils.DateUtils;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Task implements Serializable {
@@ -78,5 +79,22 @@ public class Task implements Serializable {
         }
         String description = "this is random generated Task by system";
         return new Task(name,description,taskState,DateUtils.getRandomDate(2000, 2020));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(mUUID, task.mUUID) &&
+                Objects.equals(mName, task.mName) &&
+                Objects.equals(mDescription, task.mDescription) &&
+                mTaskState == task.mTaskState &&
+                Objects.equals(mDate, task.mDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mUUID, mName, mDescription, mTaskState, mDate);
     }
 }

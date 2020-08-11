@@ -114,5 +114,9 @@ public class TaskListFragment extends Fragment implements Serializable {
         mImageViewNoDataFound.setVisibility(View.VISIBLE);
     }
 
+    public void notifyAdapter(){
+        mAdapter.notifyDataSetChanged();
+    }
+
 }
 
