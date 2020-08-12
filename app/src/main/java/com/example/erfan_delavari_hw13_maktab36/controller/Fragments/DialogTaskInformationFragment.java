@@ -17,12 +17,12 @@ import androidx.fragment.app.DialogFragment;
 import com.example.erfan_delavari_hw13_maktab36.R;
 import com.example.erfan_delavari_hw13_maktab36.model.Task;
 import com.example.erfan_delavari_hw13_maktab36.model.TaskState;
-import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DialogTaskInformationFragment extends DialogFragment {
 
@@ -42,7 +42,6 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private Button mButtonDate;
     private Button mButtonTime;
 
-    private User mUser;
     private Task mTask;
     private boolean mEditable;
 
@@ -70,7 +69,6 @@ public class DialogTaskInformationFragment extends DialogFragment {
             return;
 
         if (requestCode == REQ_CODE_DATE_PICKER) {
-            //get response from intent extra, which is user selected date
             Date userSelectedDate = (Date) data.getSerializableExtra(DialogDatePickerFragment.EXTRA_USER_SELECTED_DATE);
             mTask.setDate(userSelectedDate);
             setButtonDateText(mTask.getDate());
@@ -95,13 +93,13 @@ public class DialogTaskInformationFragment extends DialogFragment {
         mButtonDate.setOnClickListener(v -> {
             DialogDatePickerFragment datePickerFragment = DialogDatePickerFragment.newInstance(mTask.getDate());
             datePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_DATE_PICKER);
-            datePickerFragment.show(getFragmentManager(), TAG_DATE_PICKER);
+            datePickerFragment.show(Objects.requireNonNull(getFragmentManager()), TAG_DATE_PICKER);
         });
 
         mButtonTime.setOnClickListener(v -> {
             TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mTask.getDate());
             timePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_TIME_PICKER);
-            timePickerFragment.show(getFragmentManager(), TAG_TIME_PICKER);
+            timePickerFragment.show(Objects.requireNonNull(getFragmentManager()), TAG_TIME_PICKER);
         });
         viewInit();
         editableCheck(view);
@@ -142,7 +140,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
 
 
     private MaterialAlertDialogBuilder materialAlertDialogBuilder(View view) {
-        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
 
                 .setNegativeButton(android.R.string.cancel, null)
                 .setTitle(mEditable ? "Task Edit Table" : "Task Information")
@@ -181,7 +179,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
         intent.putExtra(EXTRA_HAS_CHANGED, hasChanged);
         intent.putExtra(EXTRA_TASK, mTask);
         intent.putExtra(EXTRA_DELETED, deleted);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
+        Objects.requireNonNull(getTargetFragment()).onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
     private void setButtonTimeText(Date date) {

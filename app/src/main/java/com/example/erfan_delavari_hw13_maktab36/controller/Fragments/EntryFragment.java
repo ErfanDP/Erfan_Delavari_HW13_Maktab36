@@ -64,9 +64,12 @@ public class EntryFragment extends Fragment {
             if(!userFound)
                 Toast.makeText(getActivity(), R.string.user_not_found,Toast.LENGTH_SHORT).show();
         });
-        mButtonSignUp.setOnClickListener(v ->
+        mButtonSignUp.setOnClickListener(v -> {
+            if (getFragmentManager() != null) {
                 DialogSignUpFragment.newInstance(mEditTextUserName.getText().toString()
-                ,mEditTextPassword.getText().toString()).show(getFragmentManager(), TAG_DIALOG_SIGN_UP));
+                        , mEditTextPassword.getText().toString()).show(getFragmentManager(), TAG_DIALOG_SIGN_UP);
+            }
+        });
     }
 
     private void findViews(View view) {

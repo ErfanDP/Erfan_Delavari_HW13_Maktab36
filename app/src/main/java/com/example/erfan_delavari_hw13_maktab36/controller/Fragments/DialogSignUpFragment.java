@@ -16,6 +16,8 @@ import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.util.Objects;
+
 
 public class DialogSignUpFragment extends DialogFragment {
 
@@ -57,7 +59,7 @@ public class DialogSignUpFragment extends DialogFragment {
         findViews(view);
         viewInit();
 
-        return new MaterialAlertDialogBuilder(getActivity())
+        return new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                 .setIcon(R.drawable.ic_action_signup)
                 .setTitle(R.string.sign_up)
                 .setView(view)

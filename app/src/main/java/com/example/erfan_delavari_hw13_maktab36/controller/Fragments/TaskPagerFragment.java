@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TaskPagerFragment extends Fragment {
@@ -88,7 +89,7 @@ public class TaskPagerFragment extends Fragment {
     public static void creatingDialogTaskInformation(Task task,Fragment fragment,boolean editable,int requestCode) {
         DialogTaskInformationFragment dialogTaskInformationFragment= DialogTaskInformationFragment.newInstance(editable,task);
         dialogTaskInformationFragment.setTargetFragment(fragment, requestCode);
-        dialogTaskInformationFragment.show(fragment.getFragmentManager(), TAG_TASK_INFORMATION_DIALOG);
+        dialogTaskInformationFragment.show(Objects.requireNonNull(fragment.getFragmentManager()), TAG_TASK_INFORMATION_DIALOG);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class TaskPagerFragment extends Fragment {
         if(requestCode == REQUEST_CODE_TASK_INFORMATION_EDIT){
             Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
             if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_DELETED,false)){
-                mTaskPagerAdapter.deleteTask(task);
+                mTaskPagerAdapter.deleteTask(Objects.requireNonNull(task));
                 return;
             }
 
@@ -115,7 +116,7 @@ public class TaskPagerFragment extends Fragment {
         if(requestCode == REQUEST_CODE_TASK_INFORMATION_ADD){
             Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
             if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
-                    mTaskPagerAdapter.getFragment(task.getTaskState()).addTask(task);
+                    mTaskPagerAdapter.getFragment(Objects.requireNonNull(task).getTaskState()).addTask(task);
             }
         }
     }
@@ -124,10 +125,10 @@ public class TaskPagerFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_logout:
-                getActivity().finish();
+                Objects.requireNonNull(getActivity()).finish();
                 return true;
             case R.id.menu_delete_all:
-                new MaterialAlertDialogBuilder(getActivity())
+                new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                         .setMessage(R.string.delete_all_question)
                         .setPositiveButton("im sure", (dialog, which) -> mTaskPagerAdapter.removeAllTask())
                         .setNegativeButton(android.R.string.cancel,null)

@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 
 public class DialogDatePickerFragment extends DialogFragment {
@@ -44,7 +45,9 @@ public class DialogDatePickerFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCurrentDate = (Date) getArguments().getSerializable(ARG_DATE);
+        if (getArguments() != null) {
+            mCurrentDate = (Date) getArguments().getSerializable(ARG_DATE);
+        }
     }
 
     @NonNull
@@ -56,7 +59,7 @@ public class DialogDatePickerFragment extends DialogFragment {
         findViews(view);
         initDatePicker();
 
-        return new MaterialAlertDialogBuilder(getActivity())
+        return new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     Date datePicked = getSelectedDateFromDatePicker();
@@ -95,6 +98,8 @@ public class DialogDatePickerFragment extends DialogFragment {
         Fragment fragment = getTargetFragment();
         Intent intent = new Intent();
         intent.putExtra(EXTRA_USER_SELECTED_DATE, userSelectedDate);
-        fragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+        if (fragment != null) {
+            fragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+        }
     }
 }

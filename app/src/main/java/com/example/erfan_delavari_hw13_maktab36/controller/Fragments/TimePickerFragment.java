@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class TimePickerFragment extends DialogFragment {
 
@@ -58,7 +59,7 @@ public class TimePickerFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_time_picker, null);
         findViews(view);
         timePickerAndCalendarInit();
-        return new MaterialAlertDialogBuilder(getActivity())
+        return new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                 .setView(view)
                 .setMessage("Time Picker")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -96,7 +97,7 @@ public class TimePickerFragment extends DialogFragment {
         Fragment fragment = getTargetFragment();
         Intent intent = new Intent();
         intent.putExtra(EXTRA_USER_SELECTED_TIME, date);
-        fragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+        Objects.requireNonNull(fragment).onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
