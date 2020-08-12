@@ -74,23 +74,20 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
         private TextView mName;
         private TextView mDate;
         private TextView mDescription;
+        private TextView mFirstLetter;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             mName = itemView.findViewById(R.id.list_row_name);
             mDate = itemView.findViewById(R.id.list_row_date);
             mDescription = itemView.findViewById(R.id.list_row_description);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnRowClick.rowClick(mTask);
-                }
-            });
+            mFirstLetter = itemView.findViewById(R.id.list_row_first_letter);
+            itemView.setOnClickListener(v -> mOnRowClick.rowClick(mTask));
         }
 
         public void viewBinder(Task task){
             mTask = task;
+            mFirstLetter.setText(String.valueOf(Character.toUpperCase(task.getName().charAt(0))));
             mName.setText(task.getName());
             mDescription.setText(task.getDescription());
             mDate.setText(task.getDate().toString());

@@ -1,7 +1,6 @@
 package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;

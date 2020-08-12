@@ -11,15 +11,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/entry_edit_text_user_name_text_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_main_pic"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:layout_constraintStart_toEndOf="@+id/imageView_main_pic"
+        app:layout_constraintTop_toTopOf="@+id/imageView_main_pic">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/entry_edit_text_user_name"
             android:layout_width="wrap_content"
@@ -37,9 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/entry_edit_text_user_name_text_layout">
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_main_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView_main_pic"
+        app:layout_constraintTop_toBottomOf="@+id/entry_edit_text_user_name_text_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/entry_edit_text_password"
@@ -81,9 +83,9 @@
         android:id="@+id/imageView_main_pic"
         android:layout_width="256dp"
         android:layout_height="256dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:src="@drawable/ic_main_pic"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

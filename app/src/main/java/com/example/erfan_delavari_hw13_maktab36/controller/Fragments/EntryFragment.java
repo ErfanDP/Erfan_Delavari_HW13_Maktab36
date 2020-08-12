@@ -42,7 +42,7 @@ public class EntryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_entery, container, false);
+        View view =  inflater.inflate(R.layout.fragment_entry, container, false);
         findViews(view);
         listeners();
         return view;
