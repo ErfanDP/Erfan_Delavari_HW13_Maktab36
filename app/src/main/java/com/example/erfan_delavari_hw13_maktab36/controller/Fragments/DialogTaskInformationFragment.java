@@ -21,6 +21,7 @@ import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class DialogTaskInformationFragment extends DialogFragment {
@@ -30,6 +31,10 @@ public class DialogTaskInformationFragment extends DialogFragment {
     public static final String EXTRA_HAS_CHANGED = "hasChanged";
     public static final String EXTRA_TASK = "extra_task";
     public static final String EXTRA_DELETED = "extra_deleted";
+    public static final int REQ_CODE_DATE_PICKER = 10;
+    public static final String TAG_DATE_PICKER = "tag_date_picker";
+    public static final String TAG_TIME_PICKER = "tag_time_picker";
+    public static final int REQ_CODE_TIME_PICKER = 12;
 
     private EditText mEditTextName;
     private EditText mEditTextDescription;
@@ -59,6 +64,27 @@ public class DialogTaskInformationFragment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != Activity.RESULT_OK || data == null)
+            return;
+
+        if (requestCode == REQ_CODE_DATE_PICKER) {
+            //get response from intent extra, which is user selected date
+            Date userSelectedDate = (Date) data.getSerializableExtra(DialogDatePickerFragment.EXTRA_USER_SELECTED_DATE);
+            mTask.setDate(userSelectedDate);
+            setButtonDateText(mTask.getDate());
+        }
+
+        if(requestCode == REQ_CODE_TIME_PICKER){
+            Date userSelectedTime = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_USER_SELECTED_TIME);
+            mTask.setDate(userSelectedTime);
+            setButtonTimeText(mTask.getDate());
+        }
+    }
+
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -67,11 +93,15 @@ public class DialogTaskInformationFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_task_information, null);
         findViews(view);
         mButtonDate.setOnClickListener(v -> {
-           //TODO datePiker  fragment
+            DialogDatePickerFragment datePickerFragment = DialogDatePickerFragment.newInstance(mTask.getDate());
+            datePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_DATE_PICKER);
+            datePickerFragment.show(getFragmentManager(), TAG_DATE_PICKER);
         });
 
         mButtonTime.setOnClickListener(v -> {
-            //TODO timePiker fragment
+            TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mTask.getDate());
+            timePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_TIME_PICKER);
+            timePickerFragment.show(getFragmentManager(), TAG_TIME_PICKER);
         });
         viewInit();
         editableCheck(view);
@@ -94,10 +124,8 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private void viewInit() {
         mEditTextName.setText(mTask.getName());
         mEditTextDescription.setText(mTask.getDescription());
-        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH);
-        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        mButtonDate.setText(simpleDateFormatDate.format(mTask.getDate()));
-        mButtonTime.setText(simpleDateFormatTime.format(mTask.getDate()));
+        setButtonDateText(mTask.getDate());
+        setButtonTimeText(mTask.getDate());
         switch (mTask.getTaskState()) {
             case TODO:
                 mRadioGroupTaskState.check(R.id.radioButton_todo);
@@ -110,6 +138,8 @@ public class DialogTaskInformationFragment extends DialogFragment {
                 break;
         }
     }
+
+
 
     private MaterialAlertDialogBuilder materialAlertDialogBuilder(View view) {
         MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getActivity())
@@ -154,6 +184,15 @@ public class DialogTaskInformationFragment extends DialogFragment {
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
+    private void setButtonTimeText(Date date) {
+        SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+        mButtonTime.setText(simpleDateFormatTime.format(date));
+    }
+
+    private void setButtonDateText(Date date) {
+        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MMMMM.dd", Locale.US);
+        mButtonDate.setText(simpleDateFormatDate.format(date));
+    }
     private void findViews(View view) {
         mButtonDate = view.findViewById(R.id.button_date);
         mButtonTime = view.findViewById(R.id.button_time);

@@ -16,4 +16,5 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="date_picker_title">Date Picker</string>
 </resources>
