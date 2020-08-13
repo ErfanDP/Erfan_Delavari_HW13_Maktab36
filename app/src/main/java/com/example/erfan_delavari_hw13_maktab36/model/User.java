@@ -2,6 +2,7 @@ package com.example.erfan_delavari_hw13_maktab36.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ public class User implements Serializable {
     private List<Task> mTaskList = new ArrayList<>();
     private String mUserName;
     private String mPassword;
+    private Date mRegisterDate;
 
     public User(String userName, String password,int numberOfTasks) {
         mUserName = userName;
@@ -18,12 +20,16 @@ public class User implements Serializable {
         for (int i = 0; i < numberOfTasks; i++) {
             mTaskList.add(Task.randomTaskCreator(userName+"#"+(i+1)));
         }
+        mRegisterDate = new Date();
     }
 
     public List<Task> getTaskList() {
         return mTaskList;
     }
 
+    public Date getRegisterDate() {
+        return mRegisterDate;
+    }
 
     public Task getTaskByUUID(UUID uuid) {
         for (Task task : mTaskList) {

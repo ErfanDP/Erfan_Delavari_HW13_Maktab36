@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
         android:text="@string/user_name"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/admin_text_user_name"
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_black"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/admin_text_user_name_string"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-black"
         android:text="@string/user_password"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_black"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/admin_text_user_password_string"
         app:layout_constraintTop_toBottomOf="@+id/admin_text_user_name"
@@ -56,34 +60,26 @@
         android:id="@+id/admin_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-medium"
         android:text="@string/delete"
         app:backgroundTint="#DDBE5E"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/admin_button_edit"
-        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_password_string" />
-
-    <Button
-        android:id="@+id/admin_button_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit"
-        app:backgroundTint="#DDBE5E"
-        app:layout_constraintEnd_toStartOf="@+id/admin_button_delete"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_password_string" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_user_tasks"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_button_delete" />
+        app:layout_constraintTop_toBottomOf="@+id/text_date_of_register_string" />
 
     <ImageView
         android:id="@+id/admin_no_task_found"
@@ -106,6 +102,31 @@
         android:src="@drawable/ic_plus"
         app:backgroundTint="#17631D"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/text_date_of_register_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/date_of_register"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_password" />
+
+    <TextView
+        android:id="@+id/text_date_of_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/montserrat_black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_date_of_register_string"
+        app:layout_constraintStart_toEndOf="@+id/text_date_of_register_string"
+        app:layout_constraintTop_toTopOf="@+id/text_date_of_register_string"
+        tools:text="2007.09.17-19:45:00" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,8 @@ import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -38,9 +40,9 @@ public class UserInformationFragment extends Fragment {
     private User mUser;
     private TextView mTextUserName;
     private TextView mTextUserPassword;
+    private TextView mTextDateOfRegister;
     private RecyclerView mRecyclerView;
     private TaskListAdapter mAdapter;
-    private Button mButtonEdit;
     private Button mButtonDelete;
     private OnButtonClick mOnButtonClick;
     private ImageView mImageViewNoTaskFound;
@@ -80,6 +82,8 @@ public class UserInformationFragment extends Fragment {
     private void viewInit() {
         mTextUserName.setText(mUser.getUserName());
         mTextUserPassword.setText(mUser.getPassword());
+        SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss", Locale.US);
+        mTextDateOfRegister.setText(simpleDateFormatDate.format(mUser.getRegisterDate()));
     }
 
     private void listeners() {
@@ -90,9 +94,6 @@ public class UserInformationFragment extends Fragment {
             taskInformationFragment.show(Objects.requireNonNull(getFragmentManager()),"tag_task_information_add");
         });
 
-        mButtonEdit.setOnClickListener(v -> {
-            //TODO editing user
-        });
         mButtonDelete.setOnClickListener(v -> {
             UserRepository.getRepository().deleteUser(mUser);
             mOnButtonClick.buttonDelete();
@@ -150,10 +151,10 @@ public class UserInformationFragment extends Fragment {
 
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_view_user_tasks);
+        mTextDateOfRegister = view.findViewById(R.id.text_date_of_register);
         mTextUserName = view.findViewById(R.id.admin_text_user_name);
         mTextUserPassword = view.findViewById(R.id.admin_text_user_password);
         mButtonDelete = view.findViewById(R.id.admin_button_delete);
-        mButtonEdit = view.findViewById(R.id.admin_button_edit);
         mButtonAddTask = view.findViewById(R.id.admin_button_add_task);
         mImageViewNoTaskFound = view.findViewById(R.id.admin_no_task_found);
     }
