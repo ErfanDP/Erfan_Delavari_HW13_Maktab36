@@ -6,31 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class UserRepository implements RepositoryInterface<User>{
+public class UserRepository implements RepositoryInterface<User> {
 
     private static UserRepository sRepository;
     private List<User> mUserList = new ArrayList<>();
 
 
-    private UserRepository() {}
+    private UserRepository() {
+    }
 
 
     public static UserRepository getRepository() {
-        if(sRepository == null){
+        if (sRepository == null) {
             sRepository = new UserRepository();
         }
         return sRepository;
     }
 
     @Override
-    public List<User> getList() {
+    public List<User> getUserList() {
         return mUserList;
     }
 
     @Override
-    public User get(UUID uuid) {
-        for (User user: mUserList) {
-            if(user.getUUID().equals(uuid)){
+    public User getUserByID(UUID uuid) {
+        for (User user : mUserList) {
+            if (user.getUUID().equals(uuid)) {
                 return user;
             }
         }
@@ -38,12 +39,12 @@ public class UserRepository implements RepositoryInterface<User>{
     }
 
     @Override
-    public void setList(List<User> list) {
+    public void setUserList(List<User> list) {
         mUserList = list;
     }
 
     @Override
-    public void delete(User user) {
+    public void deleteUser(User user) {
         for (int i = 0; i < mUserList.size(); i++) {
             if (mUserList.get(i).getUUID().equals(user.getUUID())) {
                 mUserList.remove(i);
@@ -53,21 +54,32 @@ public class UserRepository implements RepositoryInterface<User>{
     }
 
     @Override
-    public void update(User user) {
-        User updateUser = get(user.getUUID());
+    public void updateUser(User user) {
+        User updateUser = getUserByID(user.getUUID());
         updateUser.setUserName(user.getUserName());
         updateUser.setPassword(user.getPassword());
-        updateUser.setList(user.getList());
+        updateUser.setTaskList(user.getTaskList());
     }
 
     @Override
-    public void insert(User user) {
+    public void insertUser(User user) {
         mUserList.add(user);
     }
 
     @Override
-    public void insertToList(List<User> users) {
-        mUserList.addAll(users);}
+    public void insertListToList(List<User> users) {
+        mUserList.addAll(users);
+    }
+
+    @Override
+    public int getUserPosition(User user) {
+        for (int i = 0; i < mUserList.size(); i++) {
+            if(mUserList.get(i).getUUID().equals(user.getUUID())){
+                return i;
+            }
+        }
+        return 0;
+    }
 
 
 }

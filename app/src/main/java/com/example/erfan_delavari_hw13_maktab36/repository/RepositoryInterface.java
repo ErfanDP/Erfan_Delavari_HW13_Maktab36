@@ -7,18 +7,19 @@ import java.util.UUID;
 
 public interface RepositoryInterface<E> {
 
-    List<E> getList();
+    List<E> getUserList();
 
-    E get(UUID uuid);
+    E getUserByID(UUID uuid);
 
-    void setList(List<E> list);
+    void setUserList(List<E> list);
 
-    void delete(E e);
+    void deleteUser(E e);
 
-    void insert(E e);
+    void insertUser(E e);
 
-    void insertToList(List<E> list);
+    void insertListToList(List<E> list);
 
-    void update(E e);
+    void updateUser(E e);
 
+    int getUserPosition(E e);
 }

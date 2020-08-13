@@ -3,15 +3,20 @@ package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.erfan_delavari_hw13_maktab36.R;
+import com.example.erfan_delavari_hw13_maktab36.controller.Activity.AdminActivity;
 import com.example.erfan_delavari_hw13_maktab36.controller.Activity.TaskPagerActivity;
 import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
@@ -23,7 +28,7 @@ public class EntryFragment extends Fragment {
 
     public static final String TAG_DIALOG_SIGN_UP = "DialogSignUp";
 
-    private List<User> mUserList = UserRepository.getRepository().getList();
+    private List<User> mUserList = UserRepository.getRepository().getUserList();
 
     private EditText mEditTextUserName;
     private EditText mEditTextPassword;
@@ -36,7 +41,25 @@ public class EntryFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_entry_fragment,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_admin_item:
+                startActivity(AdminActivity.newIntent(getActivity()));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

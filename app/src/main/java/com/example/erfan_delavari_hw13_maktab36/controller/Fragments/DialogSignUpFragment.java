@@ -1,7 +1,8 @@
 package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,10 +66,11 @@ public class DialogSignUpFragment extends DialogFragment {
                 .setView(view)
                 .setPositiveButton(R.string.sign_up, (dialog, which) -> {
                             String numberOfTasks = mEditTextNumberOFTasks.getText().toString();
-                            UserRepository.getRepository().insert(
+                            UserRepository.getRepository().insertUser(
                                     new User(mEditTextUserName.getText().toString()
                                             ,mEditTextPassword.getText().toString()
                                             ,numberOfTasks.equals("")?0:Integer.parseInt(numberOfTasks)));
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,new Intent());
                         })
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();

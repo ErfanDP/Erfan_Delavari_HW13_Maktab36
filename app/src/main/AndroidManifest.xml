@@ -9,10 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name="com.example.erfan_delavari_hw13_maktab36.controller.Activity.TaskPagerActivity" />
-        <activity android:name="com.example.erfan_delavari_hw13_maktab36.controller.Activity.EnterActivity">
+        <activity android:name=".controller.Activity.UserInformationPagerActivity"></activity>
+        <activity android:name=".controller.Activity.TaskPagerActivity" />
+        <activity android:name=".controller.Activity.AdminActivity" />
+        <activity android:name=".controller.Activity.EnterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

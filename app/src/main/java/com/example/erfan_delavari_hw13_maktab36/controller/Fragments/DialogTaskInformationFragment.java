@@ -149,7 +149,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
             materialAlertDialogBuilder
                     .setPositiveButton(R.string.edit, (dialog, which) -> {
                         TaskPagerFragment.creatingDialogTaskInformation(mTask, getTargetFragment()
-                                , true, TaskPagerFragment.REQUEST_CODE_TASK_INFORMATION_EDIT);
+                                , true, getTargetRequestCode());
                         setResult(false, Activity.RESULT_CANCELED, false);
                     })
                     .setNeutralButton(R.string.delete, (dialog, which) ->

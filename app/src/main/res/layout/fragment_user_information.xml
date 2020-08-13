@@ -1,0 +1,111 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAdmin"
+    tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.UserInformationFragment">
+
+    <TextView
+        android:id="@+id/admin_text_user_name_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/user_name"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/admin_text_user_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/admin_text_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/admin_text_user_name_string"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/admin_text_user_password_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/user_password"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_name_string" />
+
+    <TextView
+        android:id="@+id/admin_text_user_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/admin_text_user_password_string"
+        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_name"
+        tools:text="123" />
+
+    <Button
+        android:id="@+id/admin_button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        app:backgroundTint="#DDBE5E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/admin_button_edit"
+        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_password_string" />
+
+    <Button
+        android:id="@+id/admin_button_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit"
+        app:backgroundTint="#DDBE5E"
+        app:layout_constraintEnd_toStartOf="@+id/admin_button_delete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/admin_text_user_password_string" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_user_tasks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/admin_button_delete" />
+
+    <ImageView
+        android:id="@+id/admin_no_task_found"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_no_data_found"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_user_tasks"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_view_user_tasks"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_user_tasks"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view_user_tasks" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/admin_button_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_plus"
+        app:backgroundTint="#17631D"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

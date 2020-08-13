@@ -6,5 +6,6 @@
     <color name="colorBackground">#C8E3C5</color>
     <color name="colorSecondary">#6488D1</color>
     <color name="colorAccent">#6FD7DC</color>
+    <color name="colorAdmin">#E8D59B</color>
     <color name="color_dialog_buttons">#0B2203</color>
 </resources>

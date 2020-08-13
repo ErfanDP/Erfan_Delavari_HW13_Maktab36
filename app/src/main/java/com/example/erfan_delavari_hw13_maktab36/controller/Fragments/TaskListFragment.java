@@ -57,7 +57,7 @@ public class TaskListFragment extends Fragment implements Serializable {
         if (getArguments() != null) {
             mTaskState = (TaskState) getArguments().getSerializable(ARG_TASK_STATE);
             mUser = UserRepository.getRepository()
-                    .get((UUID) getArguments().getSerializable(ARG_USER_ID));
+                    .getUserByID((UUID) getArguments().getSerializable(ARG_USER_ID));
         }
     }
 
@@ -98,7 +98,7 @@ public class TaskListFragment extends Fragment implements Serializable {
     }
 
     public void addTask(Task task) {
-        mUser.insert(task);
+        mUser.insertTask(task);
         mTaskList.add(task);
         mAdapter.notifyItemInserted(mTaskList.size()-1);
         mImageViewNoDataFound.setVisibility(View.INVISIBLE);
@@ -113,14 +113,14 @@ public class TaskListFragment extends Fragment implements Serializable {
     }
 
     public void notifyAdapter(Task task){
-        mUser.update(task);
+        mUser.updateTask(task);
         mTaskList = mUser.getTaskListByTaskState(mTaskState);
         mAdapter.setTaskList(mTaskList);
         mAdapter.notifyDataSetChanged();
     }
 
     public void deleteTask(Task task){
-        mUser.delete(task);
+        mUser.deleteTask(task);
         mTaskList.remove(task);
         mAdapter.setTaskList(mTaskList);
         mAdapter.notifyDataSetChanged();

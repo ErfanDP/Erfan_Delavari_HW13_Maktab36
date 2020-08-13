@@ -58,7 +58,7 @@ public class TaskPagerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if(getArguments() != null){
-            mUser = UserRepository.getRepository().get((UUID) getArguments().getSerializable(ARG_USER_ID));
+            mUser = UserRepository.getRepository().getUserByID((UUID) getArguments().getSerializable(ARG_USER_ID));
         }
     }
 
@@ -143,7 +143,7 @@ public class TaskPagerFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_pager_activity, menu);
+        inflater.inflate(R.menu.menu_pager_fragment, menu);
     }
 
 
@@ -229,7 +229,6 @@ public class TaskPagerFragment extends Fragment {
                     return mDoneFragment;
             }
         }
-
         @Override
         public int getItemCount() {
             return 3;

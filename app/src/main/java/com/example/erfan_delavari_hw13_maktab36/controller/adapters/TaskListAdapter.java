@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erfan_delavari_hw13_maktab36.R;
-import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.DialogTaskInformationFragment;
-import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.TaskPagerFragment;
 import com.example.erfan_delavari_hw13_maktab36.model.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHolder> {
 
@@ -81,16 +81,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
             mName = itemView.findViewById(R.id.list_row_name);
             mDate = itemView.findViewById(R.id.list_row_date);
             mDescription = itemView.findViewById(R.id.list_row_description);
-            mFirstLetter = itemView.findViewById(R.id.list_row_first_letter);
+            mFirstLetter = itemView.findViewById(R.id.list_row_first_letter_user);
             itemView.setOnClickListener(v -> mOnRowClick.rowClick(mTask));
         }
 
-        public void viewBinder(Task task){
+        public void viewBinder(Task task) {
             mTask = task;
             mFirstLetter.setText(String.valueOf(Character.toUpperCase(task.getName().charAt(0))));
             mName.setText(task.getName());
             mDescription.setText(task.getDescription());
-            mDate.setText(task.getDate().toString());
+            SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss", Locale.US);
+            mDate.setText(simpleDateFormatDate.format(task.getDate()));
         }
     }
 

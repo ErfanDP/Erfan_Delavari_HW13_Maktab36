@@ -20,12 +20,12 @@ public class User implements Serializable {
         }
     }
 
-    public List<Task> getList() {
+    public List<Task> getTaskList() {
         return mTaskList;
     }
 
 
-    public Task get(UUID uuid) {
+    public Task getTaskByUUID(UUID uuid) {
         for (Task task : mTaskList) {
             if(task.getUUID().equals(uuid)){
                 return task;
@@ -34,11 +34,11 @@ public class User implements Serializable {
         return null;
     }
 
-    public void setList(List<Task> list) {
+    public void setTaskList(List<Task> list) {
         mTaskList = list;
     }
 
-    public void delete(Task task) {
+    public void deleteTask(Task task) {
         for (int i = 0; i < mTaskList.size(); i++) {
             if (mTaskList.get(i).getUUID().equals(task.getUUID())) {
                 mTaskList.remove(i);
@@ -47,8 +47,8 @@ public class User implements Serializable {
         }
     }
 
-    public void update(Task task) {
-        Task updateTask = get(task.getUUID());
+    public void updateTask(Task task) {
+        Task updateTask = getTaskByUUID(task.getUUID());
         if(updateTask == null){
             return;
         }
@@ -58,7 +58,7 @@ public class User implements Serializable {
         updateTask.setDate(task.getDate());
     }
 
-    public void insert(Task task) {
+    public void insertTask(Task task) {
         mTaskList.add(task);
     }
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="#E1DDD1">
+
+    <TextView
+        android:id="@+id/list_row_first_letter_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/montserrat_black"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="T" />
+
+    <TextView
+        android:id="@+id/list_username_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/list_username"
+        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_user"
+        app:layout_constraintTop_toTopOf="@+id/list_row_first_letter_user" />
+
+    <TextView
+        android:id="@+id/list_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/list_username_string"
+        app:layout_constraintStart_toEndOf="@+id/list_username_string"
+        app:layout_constraintTop_toTopOf="@+id/list_username_string"
+        tools:text="test" />
+
+    <TextView
+        android:id="@+id/list_password_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/list_password"
+        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_user"
+        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_user" />
+
+    <TextView
+        android:id="@+id/list_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/list_password_string"
+        app:layout_constraintStart_toEndOf="@+id/list_password_string"
+        app:layout_constraintTop_toTopOf="@+id/list_password_string"
+        tools:text="123" />
+
+    <TextView
+        android:id="@+id/list_number_of_tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/list_row_first_letter_user"
+        tools:text="15" />
+
+    <TextView
+        android:id="@+id/list_number_of_tasks_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/list_number_of_tasks"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/list_number_of_tasks"
+        app:layout_constraintEnd_toStartOf="@+id/list_number_of_tasks"
+        app:layout_constraintTop_toTopOf="@+id/list_number_of_tasks" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,16 +7,17 @@
     android:layout_margin="4dp"
     android:background="#CDCDCD">
 
-
     <TextView
         android:id="@+id/list_row_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter"
-        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter"
+        android:layout_marginEnd="8dp"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_user"
+        app:layout_constraintEnd_toStartOf="@+id/list_row_description"
+        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_user"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Test" />
 
@@ -27,9 +28,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/list_row_first_letter"
-        app:layout_constraintTop_toBottomOf="@id/list_row_first_letter"
-        tools:text="fdjskhfkjhfkjdshkfkfkfj" />
+        app:layout_constraintStart_toStartOf="@id/list_row_first_letter_user"
+        app:layout_constraintTop_toBottomOf="@id/list_row_first_letter_user"
+        tools:text="2007.09.17-19:45:00" />
 
     <TextView
         android:id="@+id/list_row_description"
@@ -45,16 +46,15 @@
         tools:text="test" />
 
     <TextView
-        android:id="@+id/list_row_first_letter"
+        android:id="@+id/list_row_first_letter_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_black"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_black"
         android:textSize="48sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="T" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

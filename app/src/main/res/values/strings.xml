@@ -11,10 +11,16 @@
     <string name="logout">Logout</string>
     <string name="delete_all_tasks">Delete All tasks</string>
     <string name="delete_all_question">Are you sure you want to delete all tasks?</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="date_picker_title">Date Picker</string>
+    <string name="admin_page">Admin Page</string>
+    <string name="list_username">Username :</string>
+    <string name="list_password">Password :</string>
+    <string name="list_number_of_tasks">Number Of Tasks :</string>
+    <string name="user_password">User Password :</string>
+    <string name="user_name">User Name:</string>
+    <string name="users_list">Users List</string>
 </resources>
