@@ -70,7 +70,7 @@ public class DialogSignUpFragment extends DialogFragment {
                                     new User(mEditTextUserName.getText().toString()
                                             ,mEditTextPassword.getText().toString()
                                             ,numberOfTasks.equals("")?0:Integer.parseInt(numberOfTasks)));
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,new Intent());
+                            Objects.requireNonNull(getTargetFragment()).onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,new Intent());
                         })
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();

@@ -16,6 +16,7 @@ import com.example.erfan_delavari_hw13_maktab36.model.User;
 import com.example.erfan_delavari_hw13_maktab36.repository.UserRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserInformationPagerFragment extends Fragment {
@@ -24,8 +25,6 @@ public class UserInformationPagerFragment extends Fragment {
     private static final String ARG_USER_ID = "arg_user_id";
 
     private User mUser;
-    private UserViewPagerAdapter mAdapter;
-    private ViewPager2 mViewPager;
 
     public static UserInformationPagerFragment newInstance(UUID userId) {
         UserInformationPagerFragment fragment = new UserInformationPagerFragment();
@@ -48,11 +47,10 @@ public class UserInformationPagerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_pager, container, false);
-        mViewPager = view.findViewById(R.id.view_pager_user_information);
-        mAdapter = new UserViewPagerAdapter(UserInformationPagerFragment.this,
-                UserRepository.getRepository().getUserList());
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(UserRepository.getRepository().getUserPosition(mUser));
+        ViewPager2 viewPager = view.findViewById(R.id.view_pager_user_information);
+        viewPager.setAdapter(new UserViewPagerAdapter(UserInformationPagerFragment.this,
+                UserRepository.getRepository().getUserList()));
+        viewPager.setCurrentItem(UserRepository.getRepository().getUserPosition(mUser));
         return view;
     }
 
@@ -70,12 +68,8 @@ public class UserInformationPagerFragment extends Fragment {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return UserInformationFragment.newInstance(mUserList.get(position).getUUID(), new UserInformationFragment.OnButtonClick() {
-                @Override
-                public void buttonDelete() {
-                    getActivity().finish();
-                }
-            });
+            return UserInformationFragment.newInstance(mUserList.get(position).getUUID(),
+                    (UserInformationFragment.OnButtonClick) () -> Objects.requireNonNull(getActivity()).finish());
         }
 
         @Override

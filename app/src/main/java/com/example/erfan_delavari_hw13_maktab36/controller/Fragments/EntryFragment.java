@@ -53,13 +53,11 @@ public class EntryFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menu_admin_item:
-                startActivity(AdminActivity.newIntent(getActivity()));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_admin_item) {
+            startActivity(AdminActivity.newIntent(getActivity()));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

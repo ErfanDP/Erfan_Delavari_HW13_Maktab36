@@ -19,16 +19,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserHo
     private static final int TYPE_EVEN = 2;
 
     private List<User> mUserList;
-    private OnListEmpty mOnListEmpty;
     private OnRowClick mOnRowClick;
 
 
     public UserListAdapter(List<User> userList, OnListEmpty onListEmpty,OnRowClick onRowClick) {
         mUserList = userList;
-        mOnListEmpty = onListEmpty;
         mOnRowClick = onRowClick;
         if(mUserList.size() == 0){
-            mOnListEmpty.onListIsEmpty();
+            onListEmpty.onListIsEmpty();
         }
     }
 

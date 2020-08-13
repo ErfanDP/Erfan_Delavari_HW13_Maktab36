@@ -2,7 +2,6 @@ package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,6 +51,7 @@ public class TimePickerFragment extends DialogFragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -62,13 +62,9 @@ public class TimePickerFragment extends DialogFragment {
         return new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                 .setView(view)
                 .setMessage("Time Picker")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.M)
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Date date = getSelectedDateFromDatePicker();
-                        setResult(date);
-                    }
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    Date date = getSelectedDateFromDatePicker();
+                    setResult(date);
                 }).create();
     }
 

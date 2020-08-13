@@ -8,8 +8,7 @@ import com.example.erfan_delavari_hw13_maktab36.controller.Fragments.AdminFragme
 
 public class AdminActivity extends SingleFragmentActivity {
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context,AdminActivity.class);
-        return intent;
+        return new Intent(context,AdminActivity.class);
     }
 
     @Override

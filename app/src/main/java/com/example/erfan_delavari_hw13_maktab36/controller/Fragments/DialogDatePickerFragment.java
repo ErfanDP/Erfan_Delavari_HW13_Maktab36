@@ -1,19 +1,17 @@
 package com.example.erfan_delavari_hw13_maktab36.controller.Fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.DatePicker;
 
 import com.example.erfan_delavari_hw13_maktab36.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;

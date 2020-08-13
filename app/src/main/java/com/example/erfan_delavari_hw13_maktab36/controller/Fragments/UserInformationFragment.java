@@ -90,11 +90,8 @@ public class UserInformationFragment extends Fragment {
             taskInformationFragment.show(Objects.requireNonNull(getFragmentManager()),"tag_task_information_add");
         });
 
-        mButtonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO editing user
-            }
+        mButtonEdit.setOnClickListener(v -> {
+            //TODO editing user
         });
         mButtonDelete.setOnClickListener(v -> {
             UserRepository.getRepository().deleteUser(mUser);
@@ -137,7 +134,7 @@ public class UserInformationFragment extends Fragment {
             if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_DELETED,false)){
                 mUser.deleteTask(task);
             }else if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
-                mUser.updateTask(task);
+                mUser.updateTask(Objects.requireNonNull(task));
             }
             mAdapter.notifyDataSetChanged();
         }

@@ -21,7 +21,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     private static final int TYPE_EVEN = 2;
 
     private List<Task> mTaskList;
-    private OnListEmpty mOnListEmpty;
     private OnRowClick mOnRowClick;
 
     public void setTaskList(List<Task> taskList) {
@@ -30,10 +29,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     public TaskListAdapter(List<Task> taskList, OnListEmpty onListEmpty,OnRowClick onRowClick) {
         mTaskList = taskList;
-        mOnListEmpty = onListEmpty;
         mOnRowClick = onRowClick;
         if(mTaskList.size() == 0){
-            mOnListEmpty.onListIsEmpty();
+            onListEmpty.onListIsEmpty();
         }
     }
 
