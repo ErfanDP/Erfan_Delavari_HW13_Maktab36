@@ -27,6 +27,7 @@ import java.util.List;
 public class EntryFragment extends Fragment {
 
     public static final String TAG_DIALOG_SIGN_UP = "DialogSignUp";
+    public static final int REQUEST_CODE_SIGNUP = 13;
 
     private List<User> mUserList = UserRepository.getRepository().getUserList();
 
@@ -87,8 +88,11 @@ public class EntryFragment extends Fragment {
         });
         mButtonSignUp.setOnClickListener(v -> {
             if (getFragmentManager() != null) {
-                DialogSignUpFragment.newInstance(mEditTextUserName.getText().toString()
-                        , mEditTextPassword.getText().toString()).show(getFragmentManager(), TAG_DIALOG_SIGN_UP);
+                DialogSignUpFragment dialogSignUpFragment =
+                        DialogSignUpFragment.newInstance(mEditTextUserName.getText().toString()
+                                , mEditTextPassword.getText().toString());
+                dialogSignUpFragment.setTargetFragment(EntryFragment.this, REQUEST_CODE_SIGNUP);
+               dialogSignUpFragment.show(getFragmentManager(), TAG_DIALOG_SIGN_UP);
             }
         });
     }
