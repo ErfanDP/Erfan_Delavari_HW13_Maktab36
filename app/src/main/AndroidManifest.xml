@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.erfan_delavari_hw13_maktab36">
+    package="com.example.erfan_delavari_hw14_maktab36">
 
     <application
         android:allowBackup="true"
@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".controller.Activity.UserInformationPagerActivity"></activity>
-        <activity android:name=".controller.Activity.TaskPagerActivity" />
-        <activity android:name=".controller.Activity.AdminActivity" />
-        <activity android:name=".controller.Activity.EnterActivity">
+        <activity android:name="com.example.erfan_delavari_hw14_maktab36.controller.Activity.UserInformationPagerActivity"/>
+        <activity android:name="com.example.erfan_delavari_hw14_maktab36.controller.Activity.TaskPagerActivity" />
+        <activity android:name="com.example.erfan_delavari_hw14_maktab36.controller.Activity.AdminActivity" />
+        <activity android:name="com.example.erfan_delavari_hw14_maktab36.controller.Activity.EnterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

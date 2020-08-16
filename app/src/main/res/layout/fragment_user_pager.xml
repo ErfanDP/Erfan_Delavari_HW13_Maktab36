@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#988905"
-    tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.UserInformationPagerFragment">
+    tools:context="com.example.erfan_delavari_hw14_maktab36.controller.Fragments.UserInformationPagerFragment">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_user_information"

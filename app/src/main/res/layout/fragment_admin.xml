@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAdmin"
-    tools:context="com.example.erfan_delavari_hw13_maktab36.controller.Fragments.AdminFragment">
+    tools:context="com.example.erfan_delavari_hw14_maktab36.controller.Fragments.AdminFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:clickable="true"
         android:src="@drawable/ic_plus"
         app:backgroundTint="#5A533F"
         app:layout_constraintBottom_toBottomOf="parent"
