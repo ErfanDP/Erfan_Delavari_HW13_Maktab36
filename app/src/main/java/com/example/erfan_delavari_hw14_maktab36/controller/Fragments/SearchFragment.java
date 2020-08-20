@@ -11,12 +11,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
 import com.example.erfan_delavari_hw14_maktab36.controller.adapters.TaskSearchAdapter;
+import com.example.erfan_delavari_hw14_maktab36.model.SerializableList;
 import com.example.erfan_delavari_hw14_maktab36.model.Task;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +39,7 @@ public class SearchFragment extends Fragment {
     public static final int REQ_CODE_TIME_FROM = 2;
     public static final int REQ_CODE_TIME_TO = 3;
     public static final int REQ_CODE_DATE_TO = 4;
+    public static final String BUNDLE_Task_List = "bundle_task_list";
 
     private UserDBRepository mRepository;
 
@@ -81,8 +84,17 @@ public class SearchFragment extends Fragment {
                 Objects.requireNonNull(getContext()));
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
         mRecyclerView.setAdapter(mAdapter);
+        if(savedInstanceState != null){
+            setRecyclerViewList(((SerializableList<Task>)savedInstanceState.getSerializable(BUNDLE_Task_List)).getList());
+        }
         listeners();
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(BUNDLE_Task_List,new SerializableList<>(mAdapter.getTaskList()));
     }
 
     @Override
@@ -128,13 +140,7 @@ public class SearchFragment extends Fragment {
                         mTextTaskDescription.getText().toString(),
                         mFromdate.getTime(), mToDate.getTime());
             }
-            if(tasks.size() == 0){
-                mImageViewNoResultFound.setVisibility(View.VISIBLE);
-            }else{
-                mImageViewNoResultFound.setVisibility(View.GONE);
-            }
-            mAdapter.setTaskList(tasks);
-            mAdapter.notifyDataSetChanged();
+            setRecyclerViewList(tasks);
         });
 
         mCheckBoxSearchByDate.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -143,6 +149,16 @@ public class SearchFragment extends Fragment {
             } else
                 mLayoutSearchByDate.setVisibility(View.GONE);
         });
+    }
+
+    private void setRecyclerViewList(List<Task> tasks) {
+        if(tasks.size() == 0){
+            mImageViewNoResultFound.setVisibility(View.VISIBLE);
+        }else{
+            mImageViewNoResultFound.setVisibility(View.GONE);
+        }
+        mAdapter.setTaskList(tasks);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void dialogTimePickerCreator(Date date, int reqCode) {

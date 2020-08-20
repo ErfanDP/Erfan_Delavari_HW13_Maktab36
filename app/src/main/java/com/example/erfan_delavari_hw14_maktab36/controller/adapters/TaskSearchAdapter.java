@@ -29,6 +29,9 @@ public class TaskSearchAdapter  extends RecyclerView.Adapter<TaskSearchAdapter.T
         mTaskList = taskList;
     }
 
+    public List<Task> getTaskList() {
+        return mTaskList;
+    }
 
     public TaskSearchAdapter(List<Task> taskList, TaskSearchAdapter.OnListEmpty onListEmpty, Context context) {
         mContext = context.getApplicationContext();
