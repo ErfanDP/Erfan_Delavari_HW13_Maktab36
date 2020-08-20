@@ -50,42 +50,6 @@ public class UserDBRepository implements UserRepositoryInterface<User> {
         }
     }
 
-    private UserCursorWrapper queryUser(String selection, String[] selectionArgs) {
-        Cursor cursor = mDatabase.query(
-                UserTable.NAME,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
-        return new UserCursorWrapper(cursor, dataBaseUserID -> {
-            String selectionTask = TaskTable.COLS.USER_ID + "=?";
-            String[] selectionArgsTask = new String[]{String.valueOf(dataBaseUserID)};
-            List<Task> tasks = new ArrayList<>();
-            try (TaskCursorWrapper cursorTask = queryTask(selectionTask, selectionArgsTask)) {
-                cursorTask.moveToFirst();
-                while (!cursorTask.isAfterLast()) {
-                    tasks.add(cursorTask.getTask());
-                    cursorTask.moveToNext();
-                }
-                return tasks;
-            }
-        });
-    }
-
-    private TaskCursorWrapper queryTask(String selection, String[] selectionArgs) {
-        Cursor cursor = mDatabase.query(
-                TaskTable.NAME,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
-        return new TaskCursorWrapper(cursor);
-    }
-
 
     @Override
     public List<User> getUserList() {
@@ -124,6 +88,24 @@ public class UserDBRepository implements UserRepositoryInterface<User> {
 
 
     @Override
+    public User getTasksUser(Task task){
+
+        String selectionTask = TaskTable.COLS.UUID + "=?";
+        String[] selectionArgsTask = new String[]{task.getUUID().toString()};
+
+        TaskCursorWrapper taskCursor = queryTask(selectionTask,selectionArgsTask);
+        taskCursor.moveToFirst();
+
+        String selectionMain = UserTable.COLS.ID + "=?";
+        String[] selectionArgsMain = new String[]{String.valueOf(taskCursor.getTasksUserID())};
+
+        UserCursorWrapper cursor = queryUser(selectionMain,selectionArgsMain);
+        cursor.moveToFirst();
+        return cursor.getUser();
+    }
+
+
+    @Override
     public void insertUser(User user) {
         ContentValues valuesUser = getUserContentValues(user);
         mDatabase.insert(UserTable.NAME, null, valuesUser);
@@ -150,32 +132,6 @@ public class UserDBRepository implements UserRepositoryInterface<User> {
     }
 
 
-
-    private ContentValues getTaskContentValues(User user, Task task) {
-        ContentValues valuesTask = new ContentValues();
-        valuesTask.put(TaskTable.COLS.NAME, task.getName());
-        valuesTask.put(TaskTable.COLS.DESCRIPTION, task.getDescription());
-        valuesTask.put(TaskTable.COLS.DATE, task.getDate().getTime());
-        valuesTask.put(TaskTable.COLS.TASK_STATE, task.getTaskState().getTag());
-        valuesTask.put(TaskTable.COLS.UUID, task.getUUID().toString());
-
-        String whereUser = UserTable.COLS.UUID + "=?";
-        String[] whereArgsUser = new String[]{user.getUUID().toString()};
-
-        UserCursorWrapper userCursorWrapper = queryUser(whereUser, whereArgsUser);
-        userCursorWrapper.moveToFirst();
-        valuesTask.put(TaskTable.COLS.USER_ID, userCursorWrapper.getUserID());
-        return valuesTask;
-    }
-
-    private ContentValues getUserContentValues(User user) {
-        ContentValues valuesUser = new ContentValues();
-        valuesUser.put(UserTable.COLS.UUID, user.getUUID().toString());
-        valuesUser.put(UserTable.COLS.USERNAME, user.getUserName());
-        valuesUser.put(UserTable.COLS.PASSWORD, user.getPassword());
-        valuesUser.put(UserTable.COLS.DATE, user.getRegisterDate().getTime());
-        return valuesUser;
-    }
 
     @Override
     public int getUserPosition(User user) {
@@ -207,5 +163,117 @@ public class UserDBRepository implements UserRepositoryInterface<User> {
         String[] whereArgsTask = new String[]{task.getUUID().toString()};
         ContentValues valuesTask = getTaskContentValues(user,task);
         mDatabase.update(TaskTable.NAME,  valuesTask,whereTask,whereArgsTask);
+    }
+
+    @Override
+    public List<Task> searchTask(String name, String description) {
+        String[] selectionArgs = new String[]{};
+        Cursor cursor = mDatabase.
+                rawQuery(" SELECT *" +
+                        " FROM "+TaskTable.NAME+
+                        " WHERE "+TaskTable.COLS.NAME +
+                        " LIKE "+"'%"+name+"%'"+" AND "+
+                        TaskTable.COLS.DESCRIPTION +
+                        " LIKE "+"'%"+description+"%'",selectionArgs);
+        TaskCursorWrapper cursorWrapper = new TaskCursorWrapper(cursor);
+        List<Task> tasks = new ArrayList<>();
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                tasks.add(cursorWrapper.getTask());
+                cursorWrapper.moveToNext();
+            }
+            return tasks;
+        } finally {
+            cursorWrapper.close();
+        }
+
+    }
+
+    @Override
+    public List<Task> searchTask(String name, String description, long timeFrom, long timeTo) {
+        String[] selectionArgs = new String[]{String.valueOf(timeFrom),String.valueOf(timeTo)};
+        Cursor cursor = mDatabase.
+                rawQuery("SELECT *" +
+                        " FROM "+TaskTable.NAME+
+                        " WHERE "+TaskTable.COLS.NAME +" LIKE "+"'%"+name+"%'"+" AND "+
+                        TaskTable.COLS.DESCRIPTION +" LIKE '%"+description+"%' AND "+
+                        TaskTable.COLS.DATE +">? AND "+
+                        TaskTable.COLS.DATE +"<? ",selectionArgs);
+        TaskCursorWrapper cursorWrapper = new TaskCursorWrapper(cursor);
+        List<Task> tasks = new ArrayList<>();
+        try {
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                tasks.add(cursorWrapper.getTask());
+                cursorWrapper.moveToNext();
+            }
+            return tasks;
+        } finally {
+            cursorWrapper.close();
+        }
+
+    }
+
+    private ContentValues getTaskContentValues(User user, Task task) {
+        ContentValues valuesTask = new ContentValues();
+        valuesTask.put(TaskTable.COLS.NAME, task.getName());
+        valuesTask.put(TaskTable.COLS.DESCRIPTION, task.getDescription());
+        valuesTask.put(TaskTable.COLS.DATE, task.getDate().getTime());
+        valuesTask.put(TaskTable.COLS.TASK_STATE, task.getTaskState().getTag());
+        valuesTask.put(TaskTable.COLS.UUID, task.getUUID().toString());
+
+        String whereUser = UserTable.COLS.UUID + "=?";
+        String[] whereArgsUser = new String[]{user.getUUID().toString()};
+
+        UserCursorWrapper userCursorWrapper = queryUser(whereUser, whereArgsUser);
+        userCursorWrapper.moveToFirst();
+        valuesTask.put(TaskTable.COLS.USER_ID, userCursorWrapper.getUserID());
+        return valuesTask;
+    }
+
+    private ContentValues getUserContentValues(User user) {
+        ContentValues valuesUser = new ContentValues();
+        valuesUser.put(UserTable.COLS.UUID, user.getUUID().toString());
+        valuesUser.put(UserTable.COLS.USERNAME, user.getUserName());
+        valuesUser.put(UserTable.COLS.PASSWORD, user.getPassword());
+        valuesUser.put(UserTable.COLS.DATE, user.getRegisterDate().getTime());
+        return valuesUser;
+    }
+
+    private UserCursorWrapper queryUser(String selection, String[] selectionArgs) {
+        Cursor cursor = mDatabase.query(
+                UserTable.NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        return new UserCursorWrapper(cursor, dataBaseUserID -> {
+            String selectionTask = TaskTable.COLS.USER_ID + "=?";
+            String[] selectionArgsTask = new String[]{String.valueOf(dataBaseUserID)};
+            List<Task> tasks = new ArrayList<>();
+            try (TaskCursorWrapper cursorTask = queryTask(selectionTask, selectionArgsTask)) {
+                cursorTask.moveToFirst();
+                while (!cursorTask.isAfterLast()) {
+                    tasks.add(cursorTask.getTask());
+                    cursorTask.moveToNext();
+                }
+                return tasks;
+            }
+        });
+    }
+
+    private TaskCursorWrapper queryTask(String selection, String[] selectionArgs) {
+        Cursor cursor = mDatabase.query(
+                TaskTable.NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        return new TaskCursorWrapper(cursor);
     }
 }

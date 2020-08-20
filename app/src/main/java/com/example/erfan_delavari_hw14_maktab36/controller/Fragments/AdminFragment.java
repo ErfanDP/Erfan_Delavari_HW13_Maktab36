@@ -5,16 +5,22 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
+import com.example.erfan_delavari_hw14_maktab36.controller.Activity.AdminActivity;
+import com.example.erfan_delavari_hw14_maktab36.controller.Activity.SearchActivity;
 import com.example.erfan_delavari_hw14_maktab36.controller.Activity.UserInformationPagerActivity;
 import com.example.erfan_delavari_hw14_maktab36.controller.adapters.UserListAdapter;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
@@ -43,6 +49,7 @@ public class AdminFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mRepository = UserDBRepository.getInstance(Objects.requireNonNull(getContext()));
     }
 
@@ -68,6 +75,24 @@ public class AdminFragment extends Fragment {
             imageNoUserVisibility();
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_admin, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_search_item:
+                startActivity(SearchActivity.newIntent(getContext()));
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     private void imageNoUserVisibility() {
         if(mRepository.getUserList().size() == 0){

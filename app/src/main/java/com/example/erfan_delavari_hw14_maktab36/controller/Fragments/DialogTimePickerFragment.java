@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public class TimePickerFragment extends DialogFragment {
+public class DialogTimePickerFragment extends DialogFragment {
 
     private static final String ARG_DATE = "param1";
 
@@ -34,8 +34,8 @@ public class TimePickerFragment extends DialogFragment {
 
     public static final String EXTRA_USER_SELECTED_TIME = "com.example.criminalintent.userSelectedTime";
 
-    public static TimePickerFragment newInstance(Date date) {
-        TimePickerFragment fragment = new TimePickerFragment();
+    public static DialogTimePickerFragment newInstance(Date date) {
+        DialogTimePickerFragment fragment = new DialogTimePickerFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_DATE, date);
         fragment.setArguments(args);

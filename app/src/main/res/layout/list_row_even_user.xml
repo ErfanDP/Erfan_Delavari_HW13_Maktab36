@@ -8,7 +8,7 @@
     android:background="#D3B661">
 
     <TextView
-        android:id="@+id/list_row_first_letter_user"
+        android:id="@+id/list_row_first_letter_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/list_username"
-        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_user"
-        app:layout_constraintTop_toTopOf="@+id/list_row_first_letter_user" />
+        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_task"
+        app:layout_constraintTop_toTopOf="@+id/list_row_first_letter_task" />
 
     <TextView
         android:id="@+id/list_username"
@@ -46,8 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/list_password"
-        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_user"
-        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_user" />
+        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_task"
+        app:layout_constraintStart_toEndOf="@+id/list_row_first_letter_task" />
 
     <TextView
         android:id="@+id/list_password"
@@ -66,9 +66,9 @@
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_user"
+        app:layout_constraintBottom_toBottomOf="@+id/list_row_first_letter_task"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/list_row_first_letter_user"
+        app:layout_constraintTop_toTopOf="@+id/list_row_first_letter_task"
         tools:text="15" />
 
     <TextView

@@ -28,5 +28,12 @@ public interface UserRepositoryInterface<E> {
     void updateTask(E e,Task task);
 
     void deleteAllTasks(E e);
+
+    E getTasksUser(Task task);
+
+    List<Task> searchTask(String name,String description);
+
+    List<Task> searchTask(String name,String description,long timeFrom,long timeTo);
+
 }
 

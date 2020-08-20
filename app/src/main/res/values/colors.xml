@@ -8,4 +8,5 @@
     <color name="colorAccent">#6FD7DC</color>
     <color name="colorAdmin">#E8D59B</color>
     <color name="color_dialog_buttons">#0B2203</color>
+    <color name="background_search">#ACDADF</color>
 </resources>

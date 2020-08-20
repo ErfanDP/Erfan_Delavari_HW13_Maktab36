@@ -78,7 +78,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserHo
             mUserName = itemView.findViewById(R.id.list_username);
             mPassword = itemView.findViewById(R.id.list_password);
             mNumberOfTasks = itemView.findViewById(R.id.list_number_of_tasks);
-            mFirstLetterName = itemView.findViewById(R.id.list_row_first_letter_user);
+            mFirstLetterName = itemView.findViewById(R.id.list_row_first_letter_task);
             itemView.setOnClickListener(v -> mOnRowClick.rowClick(mUser));
         }
 

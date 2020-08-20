@@ -1,5 +1,6 @@
 package com.example.erfan_delavari_hw14_maktab36.controller.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,30 +11,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
 import com.example.erfan_delavari_hw14_maktab36.model.Task;
+import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHolder> {
+public class TaskSearchAdapter  extends RecyclerView.Adapter<TaskSearchAdapter.TaskHolder>{
 
     private static final int TYPE_ODD = 1;
     private static final int TYPE_EVEN = 2;
 
     private List<Task> mTaskList;
-    private OnRowClick mOnRowClick;
+    private Context mContext;
 
     public void setTaskList(List<Task> taskList) {
         mTaskList = taskList;
     }
 
-    public List<Task> getTaskList() {
-        return mTaskList;
-    }
 
-    public TaskListAdapter(List<Task> taskList, OnListEmpty onListEmpty, OnRowClick onRowClick) {
+    public TaskSearchAdapter(List<Task> taskList, TaskSearchAdapter.OnListEmpty onListEmpty, Context context) {
+        mContext = context.getApplicationContext();
         mTaskList = taskList;
-        mOnRowClick = onRowClick;
         if(mTaskList.size() == 0){
             onListEmpty.onListIsEmpty();
         }
@@ -49,19 +48,21 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     @NonNull
     @Override
-    public TaskListAdapter.TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TaskSearchAdapter.TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
         if (viewType == TYPE_ODD) {
-            view = inflater.inflate(R.layout.list_row_odd_task, parent, false);
+            view = inflater.inflate(R.layout.list_row_odd_task_search, parent, false);
         } else {
-            view = inflater.inflate(R.layout.list_row_even_task, parent, false);
+            view = inflater.inflate(R.layout.list_row_even_task_search, parent, false);
         }
-        return new TaskListAdapter.TaskHolder(view);
+        return new TaskSearchAdapter.TaskHolder(view);
     }
 
+
+
     @Override
-    public void onBindViewHolder(@NonNull TaskListAdapter.TaskHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskSearchAdapter.TaskHolder holder, int position) {
         holder.viewBinder(mTaskList.get(position));
     }
 
@@ -72,11 +73,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
     class TaskHolder extends RecyclerView.ViewHolder{
 
-        private Task mTask;
         private TextView mName;
         private TextView mDate;
         private TextView mDescription;
         private TextView mFirstLetter;
+        private TextView mUserName;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,14 +85,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
             mDate = itemView.findViewById(R.id.list_row_date);
             mDescription = itemView.findViewById(R.id.list_row_description);
             mFirstLetter = itemView.findViewById(R.id.list_row_first_letter_task);
-            itemView.setOnClickListener(v -> mOnRowClick.rowClick(mTask));
+            mUserName = itemView.findViewById(R.id.list_row_user);
         }
 
         public void viewBinder(Task task) {
-            mTask = task;
             mFirstLetter.setText(String.valueOf(Character.toUpperCase(task.getName().charAt(0))));
             mName.setText(task.getName());
             mDescription.setText(task.getDescription());
+            mUserName.setText(UserDBRepository.getInstance(mContext).getTasksUser(task).getUserName());
             SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss", Locale.US);
             mDate.setText(simpleDateFormatDate.format(task.getDate()));
         }
@@ -101,9 +102,4 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     public interface OnListEmpty{
         void onListIsEmpty();
     }
-
-    public interface OnRowClick {
-        void rowClick(Task task);
-    }
-
 }

@@ -27,4 +27,8 @@ public class TaskCursorWrapper extends CursorWrapper {
         TaskState taskState = TaskState.getTaskStatByTag(getInt(getColumnIndex(TaskTable.COLS.TASK_STATE)));
         return new Task(UUID.fromString(uuid),name,description,taskState,date);
     }
+
+    public int getTasksUserID(){
+        return getInt(getColumnIndex(TaskTable.COLS.USER_ID));
+    }
 }

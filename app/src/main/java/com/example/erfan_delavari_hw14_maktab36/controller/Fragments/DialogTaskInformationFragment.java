@@ -75,7 +75,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
         }
 
         if(requestCode == REQ_CODE_TIME_PICKER){
-            Date userSelectedTime = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_USER_SELECTED_TIME);
+            Date userSelectedTime = (Date) data.getSerializableExtra(DialogTimePickerFragment.EXTRA_USER_SELECTED_TIME);
             mTask.setDate(userSelectedTime);
             setButtonTimeText(mTask.getDate());
         }
@@ -97,7 +97,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
         });
 
         mButtonTime.setOnClickListener(v -> {
-            TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mTask.getDate());
+            DialogTimePickerFragment timePickerFragment = DialogTimePickerFragment.newInstance(mTask.getDate());
             timePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_TIME_PICKER);
             timePickerFragment.show(Objects.requireNonNull(getFragmentManager()), TAG_TIME_PICKER);
         });

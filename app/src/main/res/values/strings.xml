@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HW13</string>
+    <string name="app_name">HW14</string>
     <string name="entry_hint_username">UserName</string>
     <string name="entry_hint_password">Password</string>
     <string name="to_do">ToDo</string>
@@ -24,4 +24,10 @@
     <string name="user_name">User Name:</string>
     <string name="users_list">Users List</string>
     <string name="date_of_register">Date of Register :</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_description">Task Description</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="search_by_date">search by date</string>
+    <string name="user_s_username">User\'s username :</string>
 </resources>

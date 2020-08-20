@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
 import com.example.erfan_delavari_hw14_maktab36.controller.Activity.AdminActivity;
+import com.example.erfan_delavari_hw14_maktab36.controller.Activity.SearchActivity;
 import com.example.erfan_delavari_hw14_maktab36.controller.Activity.TaskPagerActivity;
 import com.example.erfan_delavari_hw14_maktab36.model.User;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
@@ -27,7 +28,7 @@ import java.util.Objects;
 public class EntryFragment extends Fragment {
 
     public static final String TAG_DIALOG_SIGN_UP = "DialogSignUp";
-    public static final int REQUEST_CODE_SIGNUP = 13;
+    public static final int REQUEST_CODE_SIGN_UP = 13;
 
     private UserDBRepository mRepository;
 
@@ -50,22 +51,27 @@ public class EntryFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_entry_fragment,menu);
+        inflater.inflate(R.menu.menu_entry_fragment, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_admin_item) {
-            startActivity(AdminActivity.newIntent(getActivity()));
-            return true;
+
+        switch (item.getItemId()) {
+            case R.id.menu_admin_item:
+                startActivity(AdminActivity.newIntent(getActivity()));
+                return true;
+            case R.id.menu_search_item:
+                startActivity(SearchActivity.newIntent(getContext()));
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_entry, container, false);
+        View view = inflater.inflate(R.layout.fragment_entry, container, false);
         findViews(view);
         listeners();
         return view;
@@ -75,25 +81,25 @@ public class EntryFragment extends Fragment {
 
         mButtonDone.setOnClickListener(v -> {
             boolean userFound = false;
-            for(User user : mRepository.getUserList()){
-                if(user.loginCheck(mEditTextUserName.getText().toString(),mEditTextPassword.getText().toString())){
-                    Intent intent = TaskPagerActivity.newIntent(getActivity(),user.getUUID());
+            for (User user : mRepository.getUserList()) {
+                if (user.loginCheck(mEditTextUserName.getText().toString(), mEditTextPassword.getText().toString())) {
+                    Intent intent = TaskPagerActivity.newIntent(getActivity(), user.getUUID());
                     mEditTextPassword.setText("");
                     mEditTextUserName.setText("");
                     startActivity(intent);
                     userFound = true;
                 }
             }
-            if(!userFound)
-                Toast.makeText(getActivity(), R.string.user_not_found,Toast.LENGTH_SHORT).show();
+            if (!userFound)
+                Toast.makeText(getActivity(), R.string.user_not_found, Toast.LENGTH_SHORT).show();
         });
         mButtonSignUp.setOnClickListener(v -> {
             if (getFragmentManager() != null) {
                 DialogSignUpFragment dialogSignUpFragment =
                         DialogSignUpFragment.newInstance(mEditTextUserName.getText().toString()
                                 , mEditTextPassword.getText().toString());
-                dialogSignUpFragment.setTargetFragment(EntryFragment.this, REQUEST_CODE_SIGNUP);
-               dialogSignUpFragment.show(getFragmentManager(), TAG_DIALOG_SIGN_UP);
+                dialogSignUpFragment.setTargetFragment(EntryFragment.this, REQUEST_CODE_SIGN_UP);
+                dialogSignUpFragment.show(getFragmentManager(), TAG_DIALOG_SIGN_UP);
             }
         });
     }
