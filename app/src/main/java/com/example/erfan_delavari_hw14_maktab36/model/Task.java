@@ -1,29 +1,49 @@
 package com.example.erfan_delavari_hw14_maktab36.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
 import com.example.erfan_delavari_hw14_maktab36.controller.utils.DateUtils;
+import com.example.erfan_delavari_hw14_maktab36.database.UserTaskDBSchema;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity(tableName = UserTaskDBSchema.TaskTable.NAME)
 public class Task implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.ID)
+    private long mId;
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.USER_ID)
+    private long mUserID;
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.UUID)
     private UUID mUUID;
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.NAME)
     private String mName;
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.DESCRIPTION)
     private String mDescription;
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.TASK_STATE)
     private TaskState mTaskState;
+    @ColumnInfo(name = UserTaskDBSchema.TaskTable.COLS.DATE)
     private Date mDate;
 
-
-    public Task() {
+    @Ignore
+    public Task(long userID) {
+        this.mUserID = userID;
         mUUID = UUID.randomUUID();
         mName = "";
         mDescription = "";
         mTaskState = TaskState.DONE;
         mDate = new Date();
     }
-
-    public Task(String name, String description, TaskState taskState, Date date) {
+    @Ignore
+    public Task(String name, String description, TaskState taskState, Date date,long userID) {
+        this.mUserID = userID;
         mUUID = UUID.randomUUID();
         mName = name;
         mDescription = description;
@@ -31,12 +51,30 @@ public class Task implements Serializable {
         mDate = date;
     }
 
-    public Task(UUID UUID, String name, String description, TaskState taskState, Date date) {
+    public Task() { }
+
+    public long getUserID() {
+        return mUserID;
+    }
+
+    public void setUserID(long userID) {
+        mUserID = userID;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        this.mId = id;
+    }
+
+    public UUID getUUID() {
+        return mUUID;
+    }
+
+    public void setUUID(UUID UUID) {
         mUUID = UUID;
-        mName = name;
-        mDescription = description;
-        mTaskState = taskState;
-        mDate = date;
     }
 
     public String getName() {
@@ -47,8 +85,12 @@ public class Task implements Serializable {
         mName = name;
     }
 
-    public UUID getUUID() {
-        return mUUID;
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
     }
 
     public TaskState getTaskState() {
@@ -59,14 +101,6 @@ public class Task implements Serializable {
         mTaskState = taskState;
     }
 
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
     public Date getDate() {
         return mDate;
     }
@@ -75,7 +109,7 @@ public class Task implements Serializable {
         mDate = date;
     }
 
-    public static Task randomTaskCreator(String name){
+    public static Task randomTaskCreator(String name,long userID){
         TaskState taskState = TaskState.DOING;
         switch (((int)(Math.random()*10)) % 3){
             case 1:
@@ -86,8 +120,9 @@ public class Task implements Serializable {
                 break;
         }
         String description = "this is random generated Task by system";
-        return new Task(name,description,taskState,DateUtils.getRandomDate(2000, 2020));
+        return new Task(name,description,taskState,DateUtils.getRandomDate(2000, 2020),userID);
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -104,5 +139,26 @@ public class Task implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(mUUID, mName, mDescription, mTaskState, mDate);
+    }
+
+    public static class TaskStateConvert{
+        @TypeConverter
+        public TaskState fromTag(int tag){
+            return TaskState.getTaskStatByTag(tag);
+        }
+        @TypeConverter
+        public int toTag(TaskState taskState){
+            return taskState.getTag();
+        }
+    }
+    public static class UUIDConvert{
+        @TypeConverter
+        public UUID toUUID(String string){
+            return UUID.fromString(string);
+        }
+        @TypeConverter()
+        public String fromUUID(UUID uuid){
+            return uuid.toString();
+        }
     }
 }

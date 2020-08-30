@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
+import com.example.erfan_delavari_hw14_maktab36.model.Task;
 import com.example.erfan_delavari_hw14_maktab36.model.User;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -33,6 +34,8 @@ public class DialogSignUpFragment extends DialogFragment {
     private EditText mEditTextPassword;
     private EditText mEditTextNumberOFTasks;
 
+    private  UserDBRepository mRepository;
+
     public static DialogSignUpFragment newInstance(String userName, String password) {
         DialogSignUpFragment fragment = new DialogSignUpFragment();
         Bundle args = new Bundle();
@@ -45,6 +48,7 @@ public class DialogSignUpFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRepository = UserDBRepository.getInstance(Objects.requireNonNull(getContext()));
         if (getArguments() != null) {
             mUserName = getArguments().getString(ARG_USER_NAME);
             mPassword = getArguments().getString(ARG_PASSWORD);
@@ -65,15 +69,22 @@ public class DialogSignUpFragment extends DialogFragment {
                 .setTitle(R.string.sign_up)
                 .setView(view)
                 .setPositiveButton(R.string.sign_up, (dialog, which) -> {
-                            String numberOfTasks = mEditTextNumberOFTasks.getText().toString();
-                            UserDBRepository.getInstance(Objects.requireNonNull(getContext())).insertUser(
-                                    new User(mEditTextUserName.getText().toString()
-                                            ,mEditTextPassword.getText().toString()
-                                            ,numberOfTasks.equals("")?0:Integer.parseInt(numberOfTasks)));
-                            Objects.requireNonNull(getTargetFragment()).onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,new Intent());
-                        })
+                    String numberOfTasks = mEditTextNumberOFTasks.getText().toString();
+                    User user = new User(mEditTextUserName.getText().toString()
+                            , mEditTextPassword.getText().toString());
+                    mRepository.insertUser(user);
+                    addRandomTasks(mRepository.getUserByID(user.getUUID()), numberOfTasks.equals("") ? 0 : Integer.parseInt(numberOfTasks));
+                    Objects.requireNonNull(getTargetFragment()).onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, new Intent());
+                })
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
+    }
+
+    public void addRandomTasks(User user, int numberOfTasks) {
+        for (int i = 0; i < numberOfTasks; i++) {
+            Task task =Task.randomTaskCreator(user.getUserName() + "#" + (i + 1), user.getId());
+            mRepository.insertTask(task);
+        }
     }
 
     private void viewInit() {

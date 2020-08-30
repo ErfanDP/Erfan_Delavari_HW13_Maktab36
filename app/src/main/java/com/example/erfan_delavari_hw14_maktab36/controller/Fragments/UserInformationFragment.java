@@ -92,7 +92,7 @@ public class UserInformationFragment extends Fragment {
 
     private void listeners() {
         mButtonAddTask.setOnClickListener(v -> {
-            Task task = new Task();
+            Task task = new Task(mUser.getId());
             DialogTaskInformationFragment taskInformationFragment = DialogTaskInformationFragment.newInstance(true,task);
             taskInformationFragment.setTargetFragment(UserInformationFragment.this,REQ_TASK_INFORMATION_ADD);
             taskInformationFragment.show(Objects.requireNonNull(getFragmentManager()),"tag_task_information_add");
@@ -141,7 +141,7 @@ public class UserInformationFragment extends Fragment {
                 mRepository.deleteTask(task);
             }else if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
                 mUser.updateTask(Objects.requireNonNull(task));
-                mRepository.updateTask(mUser,task);
+                mRepository.updateTask(task);
             }
             mAdapter.notifyDataSetChanged();
         }
@@ -150,9 +150,19 @@ public class UserInformationFragment extends Fragment {
             Task task = (Task) data.getSerializableExtra(DialogTaskInformationFragment.EXTRA_TASK);
             if(data.getBooleanExtra(DialogTaskInformationFragment.EXTRA_HAS_CHANGED,true)) {
                 mUser.insertTask(task);
-                mRepository.insertTask(mUser,task);
+                mRepository.insertTask(task);
                 mAdapter.notifyDataSetChanged();
             }
+        }
+
+        imageViewNoTaskVisibility();
+    }
+
+    private void imageViewNoTaskVisibility() {
+        if(mAdapter.getTaskList().size()==0){
+            mImageViewNoTaskFound.setVisibility(View.VISIBLE);
+        }else {
+            mImageViewNoTaskFound.setVisibility(View.INVISIBLE);
         }
     }
 

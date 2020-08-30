@@ -30,4 +30,5 @@
     <string name="to">To</string>
     <string name="search_by_date">search by date</string>
     <string name="user_s_username">User\'s username :</string>
+    <string name="not_found">Not Found</string>
 </resources>

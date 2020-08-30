@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
 import com.example.erfan_delavari_hw14_maktab36.model.Task;
+import com.example.erfan_delavari_hw14_maktab36.model.User;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
 
 import java.text.SimpleDateFormat;
@@ -95,7 +96,13 @@ public class TaskSearchAdapter  extends RecyclerView.Adapter<TaskSearchAdapter.T
             mFirstLetter.setText(String.valueOf(Character.toUpperCase(task.getName().charAt(0))));
             mName.setText(task.getName());
             mDescription.setText(task.getDescription());
-            mUserName.setText(UserDBRepository.getInstance(mContext).getTasksUser(task).getUserName());
+            User user = UserDBRepository.getInstance(mContext).getTasksUser(task);
+            if(user != null) {
+                mUserName.setText(user.getUserName());
+            }else{
+                mUserName.setText(R.string.not_found);
+
+            }
             SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss", Locale.US);
             mDate.setText(simpleDateFormatDate.format(task.getDate()));
         }

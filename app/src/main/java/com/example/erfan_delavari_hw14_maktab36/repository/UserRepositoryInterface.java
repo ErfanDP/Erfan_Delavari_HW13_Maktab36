@@ -21,13 +21,13 @@ public interface UserRepositoryInterface<E> {
 
     int getUserPosition(E e);
 
-    void insertTask(E e, Task task);
+    void insertTask( Task task);
 
     void deleteTask(Task task);
 
-    void updateTask(E e,Task task);
+    void updateTask(Task task);
 
-    void deleteAllTasks(E e);
+    void deleteAllUsersTasks(E e);
 
     E getTasksUser(Task task);
 

@@ -3,6 +3,8 @@ package com.example.erfan_delavari_hw14_maktab36.controller.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,6 +71,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
     public int getItemCount() {
         return mTaskList.size();
     }
+
+
 
     class TaskHolder extends RecyclerView.ViewHolder{
 

@@ -85,7 +85,7 @@ public class TaskPagerFragment extends Fragment {
 
     private void listeners() {
         mButtonAdd.setOnClickListener(v -> {
-            Task task = new Task();
+            Task task = new Task(mUser.getId());
             creatingDialogTaskInformation(task,TaskPagerFragment.this,true, REQUEST_CODE_TASK_INFORMATION_ADD);
         });
     }
@@ -183,7 +183,7 @@ public class TaskPagerFragment extends Fragment {
         private TaskListFragment mDoneFragment;
 
         public void removeAllTask(){
-            mRepository.deleteAllTasks(mUser);
+            mRepository.deleteAllUsersTasks(mUser);
             mUser.deleteAllTasks();
             getFragment(TaskState.DOING).removeAllTasks();
             getFragment(TaskState.DONE).removeAllTasks();

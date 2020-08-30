@@ -56,7 +56,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TaskSearchAdapter mAdapter;
 
-    private Date mFromdate;
+    private Date mFromDate;
     private Date mToDate;
 
 
@@ -126,8 +126,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void listeners() {
-        mButtonDateFrom.setOnClickListener(v -> dialogDatePickerCreator(mFromdate, REQ_CODE_DATE_FROM));
-        mButtonTimeFrom.setOnClickListener(v -> dialogTimePickerCreator(mFromdate, REQ_CODE_TIME_FROM));
+        mButtonDateFrom.setOnClickListener(v -> dialogDatePickerCreator(mFromDate, REQ_CODE_DATE_FROM));
+        mButtonTimeFrom.setOnClickListener(v -> dialogTimePickerCreator(mFromDate, REQ_CODE_TIME_FROM));
         mButtonTimeTo.setOnClickListener(v -> dialogTimePickerCreator(mToDate, REQ_CODE_TIME_TO));
         mButtonDateTo.setOnClickListener(v -> dialogDatePickerCreator(mToDate, REQ_CODE_DATE_TO));
         mButtonSearch.setOnClickListener(v -> {
@@ -138,7 +138,7 @@ public class SearchFragment extends Fragment {
             } else {
                 tasks = mRepository.searchTask(mTextTaskName.getText().toString(),
                         mTextTaskDescription.getText().toString(),
-                        mFromdate.getTime(), mToDate.getTime());
+                        mFromDate.getTime(), mToDate.getTime());
             }
             setRecyclerViewList(tasks);
         });
@@ -174,9 +174,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void viewInit() {
-        mFromdate = new Date();
-        mToDate = mFromdate;
-        setButtonFromText(mFromdate);
+        mFromDate = new Date();
+        mToDate = mFromDate;
+        setButtonFromText(mFromDate);
         setButtonToText(mToDate);
     }
 
@@ -185,7 +185,7 @@ public class SearchFragment extends Fragment {
         mButtonTimeFrom.setText(simpleDateFormatTime.format(date));
         SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
         mButtonDateFrom.setText(simpleDateFormatDate.format(date));
-        mFromdate = date;
+        mFromDate = date;
     }
 
     private void setButtonToText(Date date) {

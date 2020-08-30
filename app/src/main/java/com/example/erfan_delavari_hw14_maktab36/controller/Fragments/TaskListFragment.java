@@ -99,7 +99,7 @@ public class TaskListFragment extends Fragment implements Serializable {
 
     public void addTask(Task task) {
         mUser.insertTask(task);
-        mRepository.insertTask(mUser,task);
+        mRepository.insertTask(task);
         mAdapter.getTaskList().add(task);
         mAdapter.notifyItemInserted(mAdapter.getTaskList().size()-1);
         mImageViewNoDataFound.setVisibility(View.INVISIBLE);
@@ -114,6 +114,11 @@ public class TaskListFragment extends Fragment implements Serializable {
     public void notifyAdapter(){
         mAdapter.setTaskList(mRepository.getUserByID(mUser.getUUID()).getTaskListByTaskState(mTaskState));
         mAdapter.notifyDataSetChanged();
+        if(mAdapter.getTaskList().size()==0){
+            mImageViewNoDataFound.setVisibility(View.VISIBLE);
+        }else{
+            mImageViewNoDataFound.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void deleteTask(Task task){

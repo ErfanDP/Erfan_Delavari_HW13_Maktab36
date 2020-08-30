@@ -1,4 +1,4 @@
-package com.example.erfan_delavari_hw14_maktab36.controller.database;
+package com.example.erfan_delavari_hw14_maktab36.database;
 
 public class UserTaskDBSchema {
     public static final String NAME = "UserTaskDB.db";

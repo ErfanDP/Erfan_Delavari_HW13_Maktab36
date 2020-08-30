@@ -1,56 +1,70 @@
 package com.example.erfan_delavari_hw14_maktab36.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
+import com.example.erfan_delavari_hw14_maktab36.database.UserTaskDBSchema;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Entity(tableName = UserTaskDBSchema.UserTable.NAME)
 public class User implements Serializable {
-    private UUID mUUID;
-    private List<Task> mTaskList = new ArrayList<>();
-    private String mUserName;
-    private String mPassword;
-    private Date mRegisterDate;
 
-    public User(String userName, String password,int numberOfTasks) {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = UserTaskDBSchema.UserTable.COLS.ID)
+    private long mId;
+    @ColumnInfo(name = UserTaskDBSchema.UserTable.COLS.UUID)
+    private UUID mUUID;
+    @ColumnInfo(name = UserTaskDBSchema.UserTable.COLS.USERNAME)
+    private String mUserName;
+    @ColumnInfo(name = UserTaskDBSchema.UserTable.COLS.PASSWORD)
+    private String mPassword;
+    @ColumnInfo(name = UserTaskDBSchema.UserTable.COLS.DATE)
+    private Date mRegisterDate;
+    @Ignore
+    private List<Task> mTaskList = new ArrayList<>();
+
+    public User(String userName, String password) {
         mUserName = userName;
         mPassword = password;
         mUUID = UUID.randomUUID();
-        for (int i = 0; i < numberOfTasks; i++) {
-            mTaskList.add(Task.randomTaskCreator(userName+"#"+(i+1)));
-        }
         mRegisterDate = new Date();
     }
 
-    public User(UUID UUID, List<Task> taskList, String userName, String password, Date registerDate) {
+    public User(UUID UUID, String userName, String password, Date registerDate) {
         mUUID = UUID;
-        mTaskList = taskList;
         mUserName = userName;
         mPassword = password;
         mRegisterDate = registerDate;
-    }
-
-
-    public List<Task> getTaskList() {
-        return mTaskList;
     }
 
     public Date getRegisterDate() {
         return mRegisterDate;
     }
 
-    public Task getTaskByUUID(UUID uuid) {
-        for (Task task : mTaskList) {
-            if(task.getUUID().equals(uuid)){
-                return task;
-            }
-        }
-        return null;
+
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        mId = id;
     }
 
     public void setTaskList(List<Task> list) {
         mTaskList = list;
+    }
+
+    public List<Task> getTaskList() {
+        return mTaskList;
     }
 
     public void deleteTask(Task task) {
@@ -60,6 +74,14 @@ public class User implements Serializable {
                 return;
             }
         }
+    }
+    public Task getTaskByUUID(UUID uuid) {
+        for (Task task : mTaskList) {
+            if(task.getUUID().equals(uuid)){
+                return task;
+            }
+        }
+        return null;
     }
 
     public void updateTask(Task task) {
@@ -94,6 +116,14 @@ public class User implements Serializable {
         return mUUID;
     }
 
+    public void setUUID(UUID UUID) {
+        mUUID = UUID;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        mRegisterDate = registerDate;
+    }
+
     public String getUserName() {
         return mUserName;
     }
@@ -121,4 +151,20 @@ public class User implements Serializable {
     public Date getDate(){
         return mRegisterDate;
     }
+
+    public static class DateConverter{
+        @TypeConverter
+        public static Date toDate(long time){
+            return new Date(time);
+        }
+
+        @TypeConverter
+        public static Long fromDate(Date date){
+            return date.getTime();
+        }
+    }
+
 }
+
+
+
