@@ -24,16 +24,19 @@ public interface DataBaseDAO {
 
     @Insert
     void insertUser(User user);
-    @Insert
-    void insertListToList(User... list);
+
     @Update
     void updateUser(User user);
+
     @Insert
     void insertTask(Task task);
+
     @Insert
     void insetTasks(Task... tasks);
+
     @Delete
     void deleteTask(Task task);
+
     @Update
     void updateTask(Task task);
 

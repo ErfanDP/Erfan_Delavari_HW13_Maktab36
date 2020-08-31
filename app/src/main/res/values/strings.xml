@@ -31,4 +31,13 @@
     <string name="search_by_date">search by date</string>
     <string name="user_s_username">User\'s username :</string>
     <string name="not_found">Not Found</string>
+    <string name="share">Share</string>
+    <string name="text_share_subject">Task Sharing</string>
+    <string name="text_share">
+        Task Information\n
+        Name: %1s\n
+        Description : %2s\n
+        TaskState : %3s\n
+        Date : %4s\n
+    </string>
 </resources>

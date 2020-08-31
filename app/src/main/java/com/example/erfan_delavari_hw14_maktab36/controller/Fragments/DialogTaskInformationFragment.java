@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.erfan_delavari_hw14_maktab36.R;
@@ -41,6 +42,7 @@ public class DialogTaskInformationFragment extends DialogFragment {
     private RadioGroup mRadioGroupTaskState;
     private Button mButtonDate;
     private Button mButtonTime;
+    private Button mButtonShare;
 
     private Task mTask;
     private boolean mEditable;
@@ -90,6 +92,13 @@ public class DialogTaskInformationFragment extends DialogFragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.fragment_dialog_task_information, null);
         findViews(view);
+        listeners();
+        viewInit();
+        editableCheck(view);
+        return materialAlertDialogBuilder(view).create();
+    }
+
+    private void listeners() {
         mButtonDate.setOnClickListener(v -> {
             DialogDatePickerFragment datePickerFragment = DialogDatePickerFragment.newInstance(mTask.getDate());
             datePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_DATE_PICKER);
@@ -101,9 +110,23 @@ public class DialogTaskInformationFragment extends DialogFragment {
             timePickerFragment.setTargetFragment(DialogTaskInformationFragment.this, REQ_CODE_TIME_PICKER);
             timePickerFragment.show(Objects.requireNonNull(getFragmentManager()), TAG_TIME_PICKER);
         });
-        viewInit();
-        editableCheck(view);
-        return materialAlertDialogBuilder(view).create();
+        mButtonShare.setOnClickListener(v -> {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getShareText());
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.text_share_subject));
+            sendIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                startActivity(shareIntent);
+        });
+    }
+
+    private String getShareText(){
+        return getString(R.string.text_share
+                ,mTask.getName()
+                ,mTask.getDescription()
+                ,mTask.getTaskState().toString()
+                ,mTask.getDate().toString());
     }
 
     private void editableCheck(View view) {
@@ -116,6 +139,8 @@ public class DialogTaskInformationFragment extends DialogFragment {
             view.findViewById(R.id.radioButton_doing).setEnabled(false);
             view.findViewById(R.id.radioButton_done).setEnabled(false);
             view.findViewById(R.id.radioButton_todo).setEnabled(false);
+        }else{
+            mButtonShare.setVisibility(View.GONE);
         }
     }
 
@@ -197,5 +222,6 @@ public class DialogTaskInformationFragment extends DialogFragment {
         mEditTextDescription = view.findViewById(R.id.tasks_Description);
         mEditTextName = view.findViewById(R.id.tasks_name);
         mRadioGroupTaskState = view.findViewById(R.id.radioGroup_task_state);
+        mButtonShare = view.findViewById(R.id.button_share);
     }
 }
