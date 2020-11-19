@@ -16,6 +16,7 @@ import com.example.erfan_delavari_hw14_maktab36.model.User;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserRepositoryInterface;
 import com.example.erfan_delavari_hw14_maktab36.repository.UserDBRepository;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -59,6 +60,12 @@ public class UserInformationPagerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.setUserList(mRepository.getUserList());
+        mAdapter.notifyDataSetChanged();
+    }
 
     private class UserViewPagerAdapter extends FragmentStateAdapter {
 
@@ -73,15 +80,11 @@ public class UserInformationPagerFragment extends Fragment {
             mUserList = userList;
         }
 
+
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return UserInformationFragment.newInstance(mUserList.get(position).getUUID(),
-                    (UserInformationFragment.OnButtonClick) () -> {
-                        setUserList(mRepository.getUserList());
-                        mAdapter.notifyDataSetChanged();
-                        Objects.requireNonNull(getActivity()).finish();
-                    }
+            return UserInformationFragment.newInstance(mUserList.get(position).getUUID()
             );
         }
 

@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.erfan_delavari_hw14_maktab36">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".controller.Activity.SearchActivity"></activity>
+        <activity android:name=".controller.Activity.SearchActivity"/>
         <activity android:name=".controller.Activity.UserInformationPagerActivity" />
         <activity android:name=".controller.Activity.TaskPagerActivity" />
         <activity android:name=".controller.Activity.AdminActivity" />
@@ -24,6 +29,17 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:authorities="com.example.erfan_delavari_hw14_maktab36.fileProvider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
+
 
 </manifest>

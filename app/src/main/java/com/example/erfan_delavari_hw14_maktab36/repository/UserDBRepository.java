@@ -8,6 +8,7 @@ import com.example.erfan_delavari_hw14_maktab36.database.UserDataBase;
 import com.example.erfan_delavari_hw14_maktab36.model.Task;
 import com.example.erfan_delavari_hw14_maktab36.model.User;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -129,5 +130,13 @@ public class UserDBRepository implements UserRepositoryInterface<User> {
                 timeFrom,
                 timeTo);
 
+    }
+
+    public File getPhotoFile(Context context, Task task) {
+        File images = new File(context.getFilesDir(),"images");
+        if(!images.exists()){
+            images.mkdir();
+        }
+        return new File(images, task.getPhotoFileName());
     }
 }

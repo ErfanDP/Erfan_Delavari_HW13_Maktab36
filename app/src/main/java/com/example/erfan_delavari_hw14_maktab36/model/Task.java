@@ -136,6 +136,11 @@ public class Task implements Serializable {
                 Objects.equals(mDate, task.mDate);
     }
 
+
+    public String getPhotoFileName() {
+        return "IMG_" + getUUID() + ".png";
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(mUUID, mName, mDescription, mTaskState, mDate);
@@ -161,4 +166,5 @@ public class Task implements Serializable {
             return uuid.toString();
         }
     }
+
 }

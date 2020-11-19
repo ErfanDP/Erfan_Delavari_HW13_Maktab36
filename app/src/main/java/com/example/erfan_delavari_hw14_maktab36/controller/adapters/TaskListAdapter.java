@@ -93,7 +93,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskHo
 
         public void viewBinder(Task task) {
             mTask = task;
-            mFirstLetter.setText(String.valueOf(Character.toUpperCase(task.getName().charAt(0))));
+            if(task.getName().length()!=0) {
+                mFirstLetter.setText(String.valueOf(Character.toUpperCase(task.getName().charAt(0))));
+            }
             mName.setText(task.getName());
             mDescription.setText(task.getDescription());
             SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss", Locale.US);

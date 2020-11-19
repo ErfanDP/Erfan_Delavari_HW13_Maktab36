@@ -7,41 +7,46 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tasks_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:ems="8"
-        app:layout_constraintEnd_toStartOf="@+id/button_share"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_Task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView_Task"
+        app:layout_constraintTop_toBottomOf="@+id/button_share"
+        tools:text="TEST" />
 
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tasks_Description"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:scrollbars="vertical"
         android:scrollHorizontally="false"
         app:layout_constraintBottom_toBottomOf="@+id/radioGroup_task_state"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup_task_state"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasks_name" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_Task"
+        tools:text="ifiofjsijfdifjdsijfifjsijfdofjodsfijodsijodsijdosij" />
 
     <RadioGroup
         android:id="@+id/radioGroup_task_state"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tasks_Description"
-        app:layout_constraintTop_toBottomOf="@+id/button_share">
+        app:layout_constraintTop_toBottomOf="@+id/imageView_Task">
 
         <RadioButton
             android:id="@+id/radioButton_done"
@@ -93,16 +98,25 @@
         android:id="@+id/button_share"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/share"
         app:backgroundTint="@color/colorSecondary"
         app:icon="@drawable/ic_action_share"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tasks_name"
+        app:layout_constraintStart_toEndOf="@+id/imageView_Task"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_Task"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_task" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

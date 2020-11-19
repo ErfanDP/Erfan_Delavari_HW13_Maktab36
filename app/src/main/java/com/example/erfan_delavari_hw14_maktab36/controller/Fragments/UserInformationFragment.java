@@ -47,16 +47,14 @@ public class UserInformationFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TaskListAdapter mAdapter;
     private Button mButtonDelete;
-    private OnButtonClick mOnButtonClick;
     private ImageView mImageViewNoTaskFound;
     private FloatingActionButton mButtonAddTask;
 
 
-    public static UserInformationFragment newInstance(UUID userId,OnButtonClick onButtonClick) {
+    public static UserInformationFragment newInstance(UUID userId) {
         UserInformationFragment fragment = new UserInformationFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_USER_ID, userId);
-        args.putSerializable(ARG_ON_BUTTON_CLICK, onButtonClick);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +65,6 @@ public class UserInformationFragment extends Fragment {
         mRepository = UserDBRepository.getInstance(Objects.requireNonNull(getContext()));
         if (getArguments() != null) {
             mUser = mRepository.getUserByID((UUID) getArguments().getSerializable(ARG_USER_ID));
-            mOnButtonClick = (OnButtonClick) getArguments().getSerializable(ARG_ON_BUTTON_CLICK);
         }
     }
 
@@ -100,7 +97,7 @@ public class UserInformationFragment extends Fragment {
 
         mButtonDelete.setOnClickListener(v -> {
             mRepository.deleteUser(mUser);
-            mOnButtonClick.buttonDelete();
+            Objects.requireNonNull(getActivity()).finish();
         });
     }
 
